@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treino por Supersets (1 músculo/dia) — Estações A/B/C coesas</title>
+<style>
+:root{
+  --bg:#f5f7fb; --surface:#fff; --ink:#0b1220; --muted:#6b7280; --accent:#0ea5a4; --line:#e5e7eb;
+  --shadow:0 4px 16px rgba(15,23,42,.08);
+  --r-lg:16px; --r-md:12px; --r-sm:10px;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;
+     line-height:1.5;margin:0;color:var(--ink);background:var(--bg)}
+header{background:var(--surface);border-bottom:1px solid var(--line);padding:24px 20px;position:sticky;top:0;z-index:20}
+h1,h2,h3{margin:0 0 8px}
+h1{font-size:1.45rem;letter-spacing:.2px}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-size:.9rem}
+.badge::before{content:"•";color:var(--accent);font-weight:700}
+.info{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+
+.dia{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin:18px 0;box-shadow:var(--shadow)}
+.dia h2{font-size:1.15rem;margin-bottom:4px}
+.dia .tempo{color:var(--muted);font-size:.92rem;margin-bottom:8px}
+
+details.superset{border:1px solid var(--line);border-radius:var(--r-md);background:#fff;box-shadow:var(--shadow);margin:14px 0;overflow:hidden}
+details.superset[open] summary{border-bottom:1px dashed var(--line)}
+summary{list-style:none; cursor:pointer; padding:14px 16px; display:flex; align-items:center; gap:12px; background:#fbfbfd}
+summary::-webkit-details-marker{display:none}
+.bloco-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(14,165,164,.1);color:#0b766e;border:1px solid rgba(14,165,164,.25);
+           padding:4px 10px;border-radius:999px;font-weight:700}
+.summary-meta{margin-left:auto;color:var(--muted);font-size:.9rem}
+
+.planos{display:grid;gap:14px;padding:14px;grid-template-columns:1fr}
+@media (min-width:980px){.planos{grid-template-columns:repeat(3,1fr)}}
+.plano{display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;box-shadow:var(--shadow)}
+.plano b{font-size:1rem}
+.plano small{color:var(--muted)}
+.divider{height:1px;background:var(--line);margin:2px 0}
+.pairs{display:grid;gap:8px}
+.pair{display:flex;align-items:center;gap:10px}
+.dot{width:8px;height:8px;border-radius:999px;background:var(--accent);flex:none;opacity:.6}
+.pair-label{font-weight:600}
+.reps{margin-left:auto;font-size:.8rem;color:#036560;background:rgba(14,165,164,.12);border:1px solid rgba(14,165,164,.35);padding:2px 8px;border-radius:999px}
+
+.voltas{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pill{font-size:.8rem;color:#555;border:1px solid var(--line);background:#fcfcfc;padding:6px 10px;border-radius:999px}
+.notes{color:var(--muted);font-size:.9rem;padding:0 14px 14px}
+
+@media print{
+  header{position:static;border:none}
+  details[open] summary{border-bottom:1px solid #ccc}
+  details:not([open]){{display:block}}
+  details>summary{pointer-events:none}
+  .badge::before{content:""}
+  .dia{box-shadow:none}
+  .plano{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Treino por Supersets (1 músculo/dia) — Estações A/B/C coesas</h1>
+  <div class="info">
+    <span class="badge">Sessão: ~55–60 min (5 blocos × 3 voltas)</span>
+    <span class="badge">Descanso: 0–15s intra • 60–75s entre voltas</span>
+    <span class="badge">Progressão: topo da faixa → +2–5% carga</span>
+    <span class="badge">Falha: apenas na 3ª volta</span>
+    <span class="badge">Atualizado: 03/11/2025</span>
+  </div>
+</header>
+<main class="wrap">
+<section class="dia"><h2>PEITO</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Halteres (mesmo par)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino inclinado com halteres</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Crucifixo inclinado com halteres</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia dupla (mesma altura/pegada)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino na polia (banco inclinado)</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Cross-over alto→baixo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Barra (mesmo rack)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino inclinado com barra</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Crucifixo reto com halteres (mesmo banco)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Drop único na 3ª volta do Plano B.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino reto com halteres</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Pull-over com halter</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino na polia (banco reto)</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Pull-over na polia (corda ou barra)</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Peck-deck</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Peck-deck completo</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Peck-deck parcial no alongado</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Barra (mesmo rack)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino reto com barra (pegada média)</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Flexão no rack (barra baixa)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino reto com halteres pesado</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Flexão inclinada no banco</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Peso corporal + banco</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Paralelas para peito</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Flexão com pausa 2s</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia dupla (altura média constante)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Cross-over médio→médio</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Cross-over isométrico (segurar no meio)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Peck-deck</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Peck-deck neutro</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Peck-deck com 2s de pausa no alongado</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco inclinado + Halteres leves</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Crucifixo inclinado (cadência 3s descida)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Press inclinado leve (bombeamento)</span><span class="reps">15–20</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Paralelas</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Paralelas para peito</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria no fundo</span><span class="reps">10–20s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Banco + Barra (rack reto)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino declinado com barra</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Press com pegada larga (reto)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Peso corporal</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Flexão com pés elevados</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Flexão inclinada no banco</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section><section class="dia"><h2>COSTAS</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Máquina Remada (peito apoiado)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada neutra</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada pronada</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia alta + baixa (torre dupla adjacente)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Puxada aberta pronada</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada baixa no triângulo</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada unilateral com halter</span><span class="reps">8–10 (cada)</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada serrada com halter</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Controle 3s na descida na 3ª volta.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta (mesma altura)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Puxada aberta pronada</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Puxada neutra (triângulo)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra fixa + banco (mesmo rack)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Barra fixa pronada (assistida se preciso)</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada invertida na barra (rack)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Máquina Remada (peito apoiado)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada pegada neutra</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada pegada supinada</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pull-over na polia (corda)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Face pull</span><span class="reps">15–20</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pull-over com halter</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada halter leve (bombeamento)</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia baixa</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada baixa aberta</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada baixa neutra</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Halteres pesados</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada halter apoiado no banco</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Encolhimento com halteres</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Remada curvada com barra</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Encolhimento com barra</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Puxada supinada</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Puxada neutra (paralela)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta (pegada aberta)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Puxada por trás da cabeça (leve)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Puxada à frente com pausa 2s</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Banco romano / hiperextensões</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Hiperextensão lombar</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Hiperextensão isométrica (topo)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pullover leve (alongamento)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada unilateral leve (flush)</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section><section class="dia"><h2>PERNAS</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Leg Press</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Leg press amplitude completa</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha no leg press</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Cadeira extensora + Cadeira flexora (lado a lado)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Extensora (3s descida)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Mesa flexora (3s descida)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Agachamento goblet</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">RDL com halteres</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Se a perna estiver lotada, priorize A ou B e faça 2 voltas extras.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Agachamento no Smith (setor perna)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Agachamento no Smith</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Agachamento frontal no Smith</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Hack machine</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Hack machine (profundo)</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Hack parcial no topo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Afundo caminhando</span><span class="reps">10–12 (cada)</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Agacho búlgaro</span><span class="reps">10–12 (cada)</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Cadeira extensora</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Extensora completa</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Extensora parcial no topo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Mesa flexora (deitado ou sentado)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Flexora completa</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Flexora parcial no alongado</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco romano / lombar</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Hip extension</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Boa-manhã com halteres</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Panturrilha em pé (máquina)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha em pé</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha isometria no alto (5s)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Leg press (plataforma baixa)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha leg press (amplitude total)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha leg press (parcial topo)</span><span class="reps">15–20</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha com halteres (em pé)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Panturrilha unilateral com halter</span><span class="reps">10–12 (cada)</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Levantamento romeno com halteres</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Stiff com halteres (pausa no alongado)</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra + Rack (se disponível no setor)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Stiff com barra</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Boa-manhã com barra</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco romano</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Hip extension com carga abraçada</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Hip extension isométrico topo</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section><section class="dia"><h2>OMBROS</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Desenvolvimento com halteres</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Arnold press</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Militar em pé com barra</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Press push leve</span><span class="reps">6–8</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia baixa/alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Press na polia (barra curta)</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Elevação frontal na polia</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Rest-pause na 3ª volta do Plano A.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia baixa (mesma altura)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Elevação lateral na polia (unilateral alternando)</span><span class="reps">12–15 (cada)</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Elevação frontal na polia</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Elevação lateral com halteres</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Elevação frontal com halteres</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Cabo cruzado alto</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Lateral no cabo cruzado</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Frontal no cabo cruzado</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Peck-deck inverso</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Crucifixo inverso</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria no final</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Face pull</span><span class="reps">15–20</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Puxada alta para deltoide posterior</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres leves</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Crucifixo inverso halteres</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Reverse fly parcial topo</span><span class="reps">15–20</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Militar com barra (sentado ou em pé)</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada alta com barra</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Press neutro com halteres</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Remada alta com halteres</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia média</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Press no cabo (barra curta)</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Upright row na polia</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Encolhimento com halteres</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Encolhimento com 2s no topo</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Trap bar/Barra: encolhimento</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Encolhimento com pausa</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia baixa</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Shrug na polia</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Shrug isométrico (topo)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section><section class="dia"><h2>BÍCEPS</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Barra EZ no suporte</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca direta EZ</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca inversa EZ</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca alternada</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca martelo</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia baixa</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca na polia (barra W)</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca com corda (neutro/pronada)</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Excêntrica 3s na 3ª volta do Plano A.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco Scott</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca Scott</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Scott parcial no alongado</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia baixa + Banco (ajudando)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Scott no cabo</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria a 90° (cabo)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco inclinado + halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca inclinado com halteres</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca 1/2 amplitude no topo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta/baixa</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pose bíceps no cabo alto</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca na polia baixa</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca concentrada</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria em 90° (halter)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca barra reta</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca inversa barra</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Halteres (mesmo par)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca alternada cadenciada</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Cross-body hammer</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia baixa (corda)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca neutra (corda)</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca martelo no cabo</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca sentado</span><span class="reps">8–10</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca martelo sentado</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia baixa</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca com corda (alto volume)</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca 21 na polia</span><span class="reps">21</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca 21 com barra</span><span class="reps">21</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca direta leve (flush)</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Halteres leves</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Rosca 21 com halteres</span><span class="reps">21</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Rosca bombeamento</span><span class="reps">15–20</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section><section class="dia"><h2>TRÍCEPS</h2><div class="tempo">5 blocos (A–E) · ~55–60 minutos</div>
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco A</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Barra</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino fechado</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Testa EZ (deitado)</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Paralelas + banco</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Paralelas (assistido se preciso)</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Mergulho no banco</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown barra reta</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown pegada supinada</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco B</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta (corda)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Tríceps corda (pushdown)</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Overhead corda</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia alta (barra V/reta)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown barra V/reta</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Overhead barra na polia</span><span class="reps">10–12</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Halteres (mesmo banco)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Extensão unilateral acima da cabeça</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Coice unilateral</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      <div class="notes">Obs: Drop único na 3ª volta do Plano A.</div>
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco C</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Banco + Barra</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">JM Press (variação do supino fechado)</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Lockout no rack (parciais)</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Polia alta</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown com barra W</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Extensão inversa no cabo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Paralelas + Banco</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Paralelas com pausa</span><span class="reps">6–8</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria no fundo</span><span class="reps">10–20s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco D</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia alta (barra/corda)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown pausado 1s</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Pressdown parcial topo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Banco + Halteres</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Testa com halteres</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Skull crusher parcial topo</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Barra + Rack</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Supino fechado leve (volume)</span><span class="reps">10–12</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Board press (2–3 boards)</span><span class="reps">8–10</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    
+    <details class="superset" open>
+      <summary>
+        <span class="bloco-pill">Bloco E</span>
+        <span class="summary-meta">Descanso: 0–15s intra • 60–75s entre voltas</span>
+      </summary>
+      <div class="planos">
+    <div class="plano">
+      <div><b>Plano A</b></div>
+      <div><small>Polia baixa (unilateral)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Coice no cabo unilateral</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Overhead no cabo unilateral</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano B</b></div>
+      <div><small>Halteres (mesmo banco)</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Coice unilateral halter</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Extensão unilateral acima da cabeça</span><span class="reps">12–15</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    
+    <div class="plano">
+      <div><b>Plano C</b></div>
+      <div><small>Paralelas/banco</small></div>
+      <div class="divider"></div>
+      <div class="pairs"><div class="pair"><span class="dot"></span><span class="pair-label">Mergulho no banco</span><span class="reps">12–15</span></div><div class="pair"><span class="dot"></span><span class="pair-label">Isometria lockout (banco)</span><span class="reps">20–30s</span></div></div>
+      <div class="voltas">
+        <span class="pill">V1</span><span class="pill">V2</span><span class="pill">V3</span>
+      </div>
+    </div>
+    </div>
+      
+    </details>
+    </section>
+  <section class="wrap" style="color:#6b7280;font-size:.92rem;margin-bottom:24px">
+    <p>Se a estação estiver ocupada, mude o <b>Plano</b> dentro do mesmo bloco ou avance ao próximo e volte depois. Mantenha a faixa de repetições e descansos.</p>
+  </section>
+</main>
+</body>
+</html>
