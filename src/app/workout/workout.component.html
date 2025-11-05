@@ -1,0 +1,49 @@
+<header class="wrap">
+  <h1>{{ title }}</h1>
+  <div class="info">
+    <span class="badge" *ngFor="let badge of infoBadges">{{ badge.texto }}</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="dia" *ngFor="let dia of dias">
+    <h2>{{ dia.musculo }}</h2>
+    <div class="tempo">{{ dia.tempo }}</div>
+
+    <details class="superset" *ngFor="let superset of dia.supersets" open>
+      <summary>
+        <span class="bloco-pill">{{ superset.bloco }}</span>
+        <span class="summary-meta">Descanso: {{ superset.descanso }}</span>
+      </summary>
+
+      <div class="planos">
+        <div class="plano" *ngFor="let plano of superset.planos">
+          <div><b>{{ plano.titulo }}</b></div>
+          <div><small>{{ plano.equipamento }}</small></div>
+          <div class="divider"></div>
+          <div class="pairs">
+            <div class="pair" *ngFor="let exercicio of plano.exercicios">
+              <span class="dot"></span>
+              <span class="pair-label">{{ exercicio.nome }}</span>
+              <span class="reps">{{ exercicio.reps }}</span>
+            </div>
+          </div>
+          <div class="voltas">
+            <span class="pill">V1</span>
+            <span class="pill">V2</span>
+            <span class="pill">V3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notes" *ngIf="superset.observacao">{{ superset.observacao }}</div>
+    </details>
+  </section>
+
+  <section class="wrap footer-note">
+    <p>
+      Se a estação estiver ocupada, mude o <b>Plano</b> dentro do mesmo bloco ou
+      avance ao próximo e volte depois. Mantenha a faixa de repetições e descansos.
+    </p>
+  </section>
+</main>
