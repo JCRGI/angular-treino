@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DOM Pagamentos – Guia de Integração</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f8f9fc;
+    color: #1a1d23;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── COVER ────────────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, #0f1923 0%, #1a2e44 60%, #0d3b6e 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,255,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,170,0.06) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7dd3fc;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .cover h1 span { color: #38bdf8; }
+  .cover-subtitle {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 48px;
+  }
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #38bdf8, #34d399);
+    border-radius: 2px;
+    margin: 0 auto 48px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .cover-meta-item .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ── PAGE LAYOUT ──────────────────────────────────── */
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 48px;
+    page-break-after: always;
+  }
+  .page:last-of-type { page-break-after: auto; }
+
+  /* ── SECTION HEADINGS ─────────────────────────────── */
+  .section-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3b82f6;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f1923;
+    margin-bottom: 6px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin: 24px 0 10px;
+  }
+  .page-lead {
+    font-size: 15px;
+    color: #64748b;
+    margin-bottom: 36px;
+    max-width: 640px;
+  }
+  .section-divider {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+
+  /* ── FLOW DIAGRAM ─────────────────────────────────── */
+  .flow-wrap {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  /* actor columns */
+  .actors {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .actor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .actor-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .actor-icon.merchant  { background: #dbeafe; color: #1d4ed8; }
+  .actor-icon.dom       { background: #dcfce7; color: #166534; }
+  .actor-icon.asaas     { background: #fef3c7; color: #92400e; }
+  .actor-icon.client    { background: #f3e8ff; color: #6b21a8; }
+  .actor-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    letter-spacing: 0.5px;
+  }
+  .actor-role {
+    font-size: 10px;
+    color: #94a3b8;
+  }
+
+  /* lifeline */
+  .lifelines {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .lifeline {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .lifeline::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, #e2e8f0 0, #e2e8f0 6px, transparent 6px, transparent 12px);
+  }
+
+  /* step rows */
+  .step-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    position: relative;
+    min-height: 56px;
+  }
+  .step-msg {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .step-msg .arrow-line {
+    height: 2px;
+    background: currentColor;
+    position: relative;
+  }
+  .step-msg .arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -1px; top: -4px;
+    border-left: 8px solid currentColor;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+  .step-msg.left .arrow-line::after {
+    right: auto; left: -1px;
+    border-left: none;
+    border-right: 8px solid currentColor;
+  }
+  .step-msg .msg-label {
+    background: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    font-size: 10.5px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-msg.blue  { color: #3b82f6; }
+  .step-msg.green { color: #22c55e; }
+  .step-msg.amber { color: #f59e0b; }
+  .step-msg.violet{ color: #a855f7; }
+
+  /* ── SEQUENCE TABLE (simpler approach) ─────────────── */
+  .seq {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 24px;
+  }
+  .seq thead tr { background: #0f1923; color: #fff; }
+  .seq thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .seq tbody tr:nth-child(odd)  { background: #f8fafc; }
+  .seq tbody tr:nth-child(even) { background: #fff; }
+  .seq tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+  }
+  .seq tbody tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+  .pill-green  { background: #dcfce7; color: #166534; }
+  .pill-amber  { background: #fef3c7; color: #92400e; }
+  .pill-violet { background: #f3e8ff; color: #6b21a8; }
+  .pill-gray   { background: #f1f5f9; color: #475569; }
+  .pill-red    { background: #fee2e2; color: #991b1b; }
+
+  /* ── CODE BLOCKS ──────────────────────────────────── */
+  pre {
+    background: #0f1923;
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 20px 22px;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 8px 0 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  pre .comment { color: #4a6fa5; }
+  pre .key     { color: #7dd3fc; }
+  pre .string  { color: #86efac; }
+  pre .number  { color: #fbbf24; }
+  pre .method  { color: #f9a8d4; }
+
+  /* ── CARDS ────────────────────────────────────────── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0 32px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* ── INFO BOX ─────────────────────────────────────── */
+  .info-box {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #1e40af;
+    margin: 12px 0 20px;
+  }
+  .warn-box {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #92400e;
+    margin: 12px 0 20px;
+  }
+
+  /* ── ENV TABLE ────────────────────────────────────── */
+  table.env {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0 24px;
+  }
+  table.env th {
+    background: #f1f5f9;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.4px;
+    border: 1px solid #e2e8f0;
+  }
+  table.env td {
+    padding: 9px 12px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  table.env tr:nth-child(odd) td { background: #f8fafc; }
+  table.env code {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11px;
+    background: #e2e8f0;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #1e3a5f;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 24px;
+    margin-top: 40px;
+  }
+
+  /* ── PRINT ────────────────────────────────────────── */
+  @media print {
+    body { background: #fff; }
+    .page { padding: 40px 40px; }
+    .cover { min-height: 100vh; }
+  }
+
+  /* ── MERMAID-STYLE SEQUENCE VISUAL ───────────────── */
+  .diagram {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11px;
+    background: #0f1923;
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 28px 24px;
+    line-height: 2;
+    overflow-x: auto;
+    margin-bottom: 28px;
+    white-space: pre;
+  }
+  .diagram .c-merchant { color: #60a5fa; }
+  .diagram .c-dom      { color: #4ade80; }
+  .diagram .c-asaas    { color: #fbbf24; }
+  .diagram .c-client   { color: #c084fc; }
+  .diagram .c-arrow    { color: #94a3b8; }
+  .diagram .c-note     { color: #475569; font-style: italic; }
+
+  /* ── NUMBER STEPS ─────────────────────────────────── */
+  .steps { counter-reset: step; }
+  .step-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #0f1923;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .step-num::before { content: counter(step); }
+  .step-content { flex: 1; padding-top: 4px; }
+  .step-content strong { display: block; font-size: 13px; color: #1e3a5f; margin-bottom: 3px; }
+  .step-content p { font-size: 12px; color: #64748b; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ COVER -->
+<div class="cover">
+  <div class="cover-badge">Documentação Técnica</div>
+  <h1>DOM <span>Pagamentos</span></h1>
+  <div class="cover-subtitle">Guia Completo de Integração</div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">Versão</div>
+      <div class="value">1.0.0</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Produto</div>
+      <div class="value">Payment Link API</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">PSP</div>
+      <div class="value">Asaas</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Data</div>
+      <div class="value">Março 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE 1 – VISÃO GERAL -->
+<div class="page">
+  <div class="section-tag">01 · VISÃO GERAL</div>
+  <h2>O que é o DOM Pagamentos?</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    DOM Pagamentos é uma camada de orquestração sobre o PSP Asaas. O merchant não precisa ter
+    contrato direto com o Asaas – ele apenas chama uma API REST simples e recebe uma URL
+    de pagamento pronta para enviar ao cliente final.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon" style="background:#dbeafe">🔗</div>
+      <h4>Payment Link</h4>
+      <p>Gera uma URL de pagamento que aceita Pix, boleto ou cartão. O cliente escolhe o método.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#dcfce7">🔔</div>
+      <h4>Webhook</h4>
+      <p>Notificação automática quando o pagamento é confirmado. Garante consistência via retry.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#fef3c7">🏦</div>
+      <h4>Asaas como PSP</h4>
+      <p>Toda a liquidação financeira ocorre no Asaas. DOM abstrai a API deles para você.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#f3e8ff">📡</div>
+      <h4>Callback</h4>
+      <p>Após confirmação, DOM notifica o sistema do merchant com o status atualizado.</p>
+    </div>
+  </div>
+
+  <h3>Arquitetura em 3 camadas</h3>
+  <table class="env">
+    <thead>
+      <tr><th>Camada</th><th>Responsabilidade</th><th>Tecnologia</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="pill pill-blue">API REST</span></td>
+        <td>Recebe requisições do merchant, valida, cria o link no Asaas</td>
+        <td>Spring Boot + OpenAPI</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-green">Eventos</span></td>
+        <td>Processa webhooks do Asaas com retry e dead-letter queue</td>
+        <td>Apache Camel</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-amber">Callback</span></td>
+        <td>Notifica o sistema do merchant após confirmação</td>
+        <td>HTTP POST (configurável)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>Sem PCI-DSS para o merchant.</strong> O cliente final digita os dados do cartão
+    diretamente na página hospedada pelo Asaas. O merchant nunca toca em dados sensíveis.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE 2 – FLUXO COMPLETO -->
+<div class="page">
+  <div class="section-tag">02 · FLUXO COMPLETO</div>
+  <h2>Sequência de Mensagens</h2>
+  <div class="section-divider"></div>
+
+  <!-- Visual sequence table -->
+  <table class="seq">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>De</th>
+        <th>Para</th>
+        <th>Mensagem / Evento</th>
+        <th>Conteúdo relevante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td><span class="pill pill-blue">Merchant</span></td>
+        <td><span class="pill pill-green">DOM API</span></td>
+        <td><code>POST /api/v1/payments/link</code></td>
+        <td>name, amountInCents, callbackUrl</td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td><span class="pill pill-green">DOM API</span></td>
+        <td><span class="pill pill-amber">Asaas</span></td>
+        <td><code>POST /paymentLinks</code></td>
+        <td>name, value, billingType: UNDEFINED</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><span class="pill pill-amber">Asaas</span></td>
+        <td><span class="pill pill-green">DOM API</span></td>
+        <td>200 OK</td>
+        <td>id (lnk_…), url (asaas.com/c/…)</td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td><span class="pill pill-green">DOM API</span></td>
+        <td><span class="pill pill-blue">Merchant</span></td>
+        <td>201 Created</td>
+        <td>paymentId, url, status: PENDING</td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td><span class="pill pill-blue">Merchant</span></td>
+        <td><span class="pill pill-violet">Cliente</span></td>
+        <td>Envia URL (WhatsApp / e-mail)</td>
+        <td>asaas.com/c/…</td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td><span class="pill pill-violet">Cliente</span></td>
+        <td><span class="pill pill-amber">Asaas</span></td>
+        <td>Acessa link, escolhe método, paga</td>
+        <td>Pix / Boleto / Cartão</td>
+      </tr>
+      <tr>
+        <td><strong>7</strong></td>
+        <td><span class="pill pill-amber">Asaas</span></td>
+        <td><span class="pill pill-green">DOM Webhook</span></td>
+        <td><code>POST /api/v1/webhooks/asaas</code></td>
+        <td>event: PAYMENT_RECEIVED, value</td>
+      </tr>
+      <tr>
+        <td><strong>8</strong></td>
+        <td><span class="pill pill-green">DOM Camel</span></td>
+        <td><span class="pill pill-green">DOM DB</span></td>
+        <td>Atualiza status</td>
+        <td>status → RECEIVED (com retry)</td>
+      </tr>
+      <tr>
+        <td><strong>9</strong></td>
+        <td><span class="pill pill-green">DOM API</span></td>
+        <td><span class="pill pill-blue">Merchant</span></td>
+        <td><code>POST {callbackUrl}</code></td>
+        <td>event: RECEIVED, paymentId, amount</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ASCII-style visual diagram -->
+  <div class="diagram"><span class="c-merchant">  MERCHANT</span>          <span class="c-dom">DOM PAGAMENTOS</span>          <span class="c-asaas">ASAAS</span>              <span class="c-client">CLIENTE</span>
+<span class="c-arrow">     │                       │                        │                   │</span>
+<span class="c-arrow">     │</span><span class="c-merchant">── POST /payments/link ─►</span><span class="c-arrow">│</span>                        <span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span>                       <span class="c-arrow">│</span><span class="c-dom">── POST /paymentLinks ──►</span><span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span>                       <span class="c-arrow">│</span><span class="c-asaas">◄── { id, url } ─────────</span><span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span><span class="c-dom">◄── 201 { url } ─────────</span><span class="c-arrow">│</span>                        <span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span>                        <span class="c-arrow">│</span>                   <span class="c-arrow">│</span>
+<span class="c-arrow">     │</span><span class="c-note">  ── WhatsApp/e-mail ─── ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─►</span><span class="c-arrow">│</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span>                        <span class="c-arrow">│</span><span class="c-client">◄── acessa link ──</span><span class="c-arrow">│</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span>                        <span class="c-arrow">│</span><span class="c-client">── escolhe método►</span><span class="c-arrow">│</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span>                        <span class="c-arrow">│</span><span class="c-client">◄── paga ──────────</span><span class="c-arrow">│</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span><span class="c-asaas">◄── PAYMENT_RECEIVED ────</span><span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span>                       <span class="c-arrow">│</span> <span class="c-dom">[ Camel: retry+DLQ ]</span>    <span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span><span class="c-dom">◄── POST callbackUrl ────</span><span class="c-arrow">│</span>                        <span class="c-arrow">│                   │</span>
+<span class="c-arrow">     │</span>                        <span class="c-arrow">│</span>                        <span class="c-arrow">│                   │</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE 3 – GUIA PASSO A PASSO -->
+<div class="page">
+  <div class="section-tag">03 · GUIA DE INTEGRAÇÃO</div>
+  <h2>Passo a Passo</h2>
+  <div class="section-divider"></div>
+
+  <div class="steps">
+
+    <div class="step-item">
+      <div class="step-num"></div>
+      <div class="step-content">
+        <strong>Obtenha suas credenciais</strong>
+        <p>Crie uma conta no painel DOM Pagamentos e copie o <code>API_KEY</code>. Ele será enviado
+        como header <code>X-API-Key</code> em todas as requisições.</p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num"></div>
+      <div class="step-content">
+        <strong>Crie um Payment Link</strong>
+        <p>Envie uma requisição <code>POST</code> com o valor e nome do produto.</p>
+      </div>
+    </div>
+
+    <pre><span class="comment">// Requisição</span>
+<span class="method">POST</span> https://api.dompagamentos.com.br/api/v1/payments/link
+<span class="key">Content-Type:</span> <span class="string">application/json</span>
+<span class="key">X-API-Key:</span> <span class="string">sua_chave_aqui</span>
+
+{
+  <span class="key">"name"</span>:            <span class="string">"Serviço de Design – Pacote Pro"</span>,
+  <span class="key">"description"</span>:     <span class="string">"5 artes + 2 revisões"</span>,
+  <span class="key">"amountInCents"</span>:   <span class="number">29900</span>,
+  <span class="key">"callbackUrl"</span>:     <span class="string">"https://meu-sistema.com/webhooks/pagamentos"</span>,
+  <span class="key">"expiresAt"</span>:       <span class="string">"2026-04-14T23:59:00Z"</span>   <span class="comment">// opcional</span>
+}</pre>
+
+    <div class="step-item">
+      <div class="step-num"></div>
+      <div class="step-content">
+        <strong>Receba a URL de pagamento</strong>
+        <p>A resposta traz a URL pronta para enviar ao cliente e o <code>paymentId</code> para
+        rastrear o pagamento.</p>
+      </div>
+    </div>
+
+    <pre><span class="comment">// Resposta 201 Created</span>
+{
+  <span class="key">"paymentId"</span>:  <span class="string">"pay_8f2a1b3c4d"</span>,
+  <span class="key">"url"</span>:         <span class="string">"https://asaas.com/c/8f2a1b3c4d"</span>,
+  <span class="key">"status"</span>:      <span class="string">"PENDING"</span>,
+  <span class="key">"amountInCents"</span>: <span class="number">29900</span>,
+  <span class="key">"createdAt"</span>:   <span class="string">"2026-03-14T10:00:00Z"</span>
+}</pre>
+
+    <div class="step-item">
+      <div class="step-num"></div>
+      <div class="step-content">
+        <strong>Envie a URL ao cliente</strong>
+        <p>Cole o valor de <code>url</code> no WhatsApp, e-mail ou SMS. O cliente acessa a página
+        do Asaas e escolhe Pix, boleto ou cartão — sem necessidade de cadastro.</p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num"></div>
+      <div class="step-content">
+        <strong>Configure o endpoint de callback</strong>
+        <p>Quando o pagamento for confirmado, DOM enviará um <code>POST</code> para o
+        <code>callbackUrl</code> que você informou. Implemente esse endpoint no seu sistema.</p>
+      </div>
+    </div>
+
+    <pre><span class="comment">// Payload que você receberá no callbackUrl</span>
+{
+  <span class="key">"event"</span>:       <span class="string">"PAYMENT_RECEIVED"</span>,
+  <span class="key">"paymentId"</span>:   <span class="string">"pay_8f2a1b3c4d"</span>,
+  <span class="key">"status"</span>:      <span class="string">"RECEIVED"</span>,
+  <span class="key">"amountInCents"</span>: <span class="number">29900</span>,
+  <span class="key">"paidAt"</span>:      <span class="string">"2026-03-14T11:35:22Z"</span>,
+  <span class="key">"paymentMethod"</span>: <span class="string">"PIX"</span>          <span class="comment">// PIX | BOLETO | CREDIT_CARD</span>
+}</pre>
+
+  </div><!-- /steps -->
+
+  <div class="warn-box">
+    <strong>Valide a autenticidade do callback.</strong> DOM assina cada notificação com
+    o header <code>X-DOM-Signature</code> (HMAC-SHA256 do body + seu API_KEY).
+    Rejeite chamadas sem assinatura válida.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE 4 – REFERÊNCIA DA API -->
+<div class="page">
+  <div class="section-tag">04 · REFERÊNCIA DA API</div>
+  <h2>Endpoints</h2>
+  <div class="section-divider"></div>
+
+  <h3>POST /api/v1/payments/link — Criar link de pagamento</h3>
+  <table class="env">
+    <thead><tr><th>Campo</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+    <tbody>
+      <tr><td><code>name</code></td><td>string</td><td><span class="pill pill-red">sim</span></td><td>Nome exibido na página de pagamento</td></tr>
+      <tr><td><code>amountInCents</code></td><td>integer</td><td><span class="pill pill-red">sim</span></td><td>Valor em centavos (ex.: 15000 = R$ 150,00)</td></tr>
+      <tr><td><code>description</code></td><td>string</td><td><span class="pill pill-gray">não</span></td><td>Detalhes adicionais do produto/serviço</td></tr>
+      <tr><td><code>callbackUrl</code></td><td>string (URL)</td><td><span class="pill pill-gray">não</span></td><td>Endpoint para receber notificação de pagamento</td></tr>
+      <tr><td><code>expiresAt</code></td><td>string (ISO-8601)</td><td><span class="pill pill-gray">não</span></td><td>Data/hora de expiração do link</td></tr>
+    </tbody>
+  </table>
+
+  <h3>GET /api/v1/payments/{paymentId} — Consultar pagamento</h3>
+  <table class="env">
+    <thead><tr><th>Parâmetro</th><th>Local</th><th>Descrição</th></tr></thead>
+    <tbody>
+      <tr><td><code>paymentId</code></td><td>path</td><td>ID retornado na criação do link</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Status possíveis</h3>
+  <table class="env">
+    <thead><tr><th>Status</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill pill-gray">PENDING</span></td><td>Link criado, aguardando pagamento</td></tr>
+      <tr><td><span class="pill pill-amber">OVERDUE</span></td><td>Link expirado sem pagamento</td></tr>
+      <tr><td><span class="pill pill-green">RECEIVED</span></td><td>Pagamento confirmado</td></tr>
+      <tr><td><span class="pill pill-red">REFUNDED</span></td><td>Valor estornado</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tratamento de erros</h3>
+  <table class="env">
+    <thead><tr><th>HTTP</th><th>Código interno</th><th>Causa</th></tr></thead>
+    <tbody>
+      <tr><td>400</td><td><code>VALIDATION_ERROR</code></td><td>Campo obrigatório ausente ou inválido</td></tr>
+      <tr><td>401</td><td><code>UNAUTHORIZED</code></td><td>API Key ausente ou inválida</td></tr>
+      <tr><td>404</td><td><code>NOT_FOUND</code></td><td>paymentId inexistente</td></tr>
+      <tr><td>422</td><td><code>PSP_REJECTED</code></td><td>Asaas recusou a criação (conta inativa etc.)</td></tr>
+      <tr><td>500</td><td><code>INTERNAL_ERROR</code></td><td>Erro interno — abra um ticket</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <strong>Base URL:</strong> <code>https://api.dompagamentos.com.br</code> (produção) &nbsp;·&nbsp;
+    <code>https://sandbox.dompagamentos.com.br</code> (testes com dados fictícios Asaas)
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ PAGE 5 – WEBHOOK INTERNO -->
+<div class="page">
+  <div class="section-tag">05 · RESILIÊNCIA E RETRIES</div>
+  <h2>Como o Webhook é Processado</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    O DOM usa Apache Camel para processar notificações do Asaas de forma resiliente.
+    Se o banco de dados ou o callbackUrl do merchant estiver instável, o sistema garante
+    entrega eventual sem perda de eventos.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon" style="background:#dcfce7">1</div>
+      <h4>Recebimento</h4>
+      <p>Asaas chama <code>POST /webhooks/asaas</code>. DOM responde 200 imediatamente sem processar.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#dbeafe">2</div>
+      <h4>Enfileiramento</h4>
+      <p>O evento é publicado numa fila interna do Camel para processamento assíncrono.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#fef3c7">3</div>
+      <h4>Retry automático</h4>
+      <p>Em caso de falha: 3 tentativas com backoff exponencial (5s, 25s, 125s).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#fee2e2">4</div>
+      <h4>Dead Letter Queue</h4>
+      <p>Após 3 falhas, o evento vai para a DLQ. O time de operações é alertado para re-processar manualmente.</p>
+    </div>
+  </div>
+
+  <h3>Retry no callback do merchant</h3>
+  <p style="font-size:12px;color:#64748b;margin-bottom:12px;">
+    Quando DOM tenta notificar seu <code>callbackUrl</code> e recebe erro HTTP ou timeout,
+    o mesmo mecanismo de retry é aplicado. Para garantir idempotência:
+  </p>
+
+  <pre><span class="comment">// O campo "paymentId" é único por evento.
+// Se você receber o mesmo paymentId duas vezes, ignore a segunda chamada.</span>
+
+<span class="key">if</span> (await db.payments.exists({ <span class="key">paymentId</span>, <span class="key">status</span>: <span class="string">'RECEIVED'</span> })) {
+  <span class="method">return</span> res.status(<span class="number">200</span>).json({ <span class="key">ok</span>: <span class="number">true</span>, <span class="key">idempotent</span>: <span class="number">true</span> });
+}
+
+<span class="comment">// senão, processe normalmente</span>
+await db.payments.update({ <span class="key">paymentId</span>, <span class="key">status</span>: <span class="string">'RECEIVED'</span> });</pre>
+
+  <h3>Diagrama de estados do pagamento</h3>
+  <div class="diagram"><span class="c-arrow">        ┌────────────────┐</span>
+        <span class="c-arrow">│</span>  <span class="c-dom">● PENDING</span>      <span class="c-arrow">│</span>   <span class="c-note">&lt;── criado via POST /payments/link</span>
+        <span class="c-arrow">└───────┬────────┘</span>
+                <span class="c-arrow">│</span>
+        <span class="c-arrow">┌───────┴────────┐</span>
+        <span class="c-arrow">│                │</span>
+        <span class="c-arrow">▼</span>                <span class="c-arrow">▼</span>
+<span class="c-arrow">┌───────────────┐   ┌───────────────┐</span>
+<span class="c-arrow">│</span> <span class="c-asaas">● OVERDUE</span>    <span class="c-arrow">│   │</span> <span class="c-dom">● RECEIVED</span>   <span class="c-arrow">│</span>   <span class="c-note">&lt;── webhook PAYMENT_RECEIVED</span>
+<span class="c-arrow">│ expirou sem   │   │ pagamento     │</span>
+<span class="c-arrow">│ pagamento     │   │ confirmado    │</span>
+<span class="c-arrow">└───────────────┘   └───────┬───────┘</span>
+                            <span class="c-arrow">│</span>
+                    <span class="c-arrow">┌───────┴───────┐</span>
+                    <span class="c-arrow">│</span> <span class="c-client">● REFUNDED</span>   <span class="c-arrow">│</span>   <span class="c-note">&lt;── estorno solicitado</span>
+                    <span class="c-arrow">└───────────────┘</span></div>
+
+  <div class="footer">
+    DOM Pagamentos · Documentação Técnica v1.0.0 · Março 2026<br/>
+    Para suporte: suporte@dompagamentos.com.br
+  </div>
+</div>
+
+</body>
+</html>
