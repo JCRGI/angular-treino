@@ -1,0 +1,231 @@
+.pricing__header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.pricing__header .section-subtitle {
+  margin: 0 auto 32px;
+}
+
+/* Toggle */
+.pricing__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.pricing__toggle span.active {
+  color: white;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.toggle-switch.on {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  transition: var(--transition);
+}
+
+.toggle-switch.on .toggle-thumb {
+  transform: translateX(22px);
+}
+
+.save-badge {
+  background: rgba(0,212,170,0.15);
+  border: 1px solid rgba(0,212,170,0.3);
+  color: var(--color-secondary);
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Grid */
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+.plan-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: 36px 32px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.plan-card:hover {
+  border-color: var(--color-border-purple);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.plan-card.highlighted {
+  background: linear-gradient(145deg, rgba(91,79,232,0.2) 0%, rgba(61,50,196,0.15) 100%);
+  border: 1.5px solid var(--color-border-purple);
+  box-shadow: 0 0 60px rgba(91,79,232,0.2);
+  transform: scale(1.02);
+}
+
+.plan-card.highlighted:hover {
+  box-shadow: 0 0 80px rgba(91,79,232,0.3);
+}
+
+.plan-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-cta);
+  color: white;
+  padding: 5px 18px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(91,79,232,0.4);
+}
+
+.plan-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.plan-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.plan-desc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  min-height: 52px;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.plan-price__amount {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.03em;
+  color: white;
+}
+
+.plan-price--custom {
+  font-size: 26px;
+}
+
+.plan-price__suffix {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.plan-fee {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+}
+
+.plan-cta {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.plan-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.plan-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+}
+
+.plan-feature--no {
+  color: var(--color-text-muted);
+}
+
+.check-icon { color: var(--color-secondary); }
+.x-icon { color: var(--color-text-muted); }
+
+/* Note */
+.pricing__note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.pricing__note svg { color: var(--color-text-muted); }
+
+.pricing__note a {
+  color: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.pricing__note a:hover {
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .pricing__grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .plan-card.highlighted {
+    transform: none;
+  }
+}

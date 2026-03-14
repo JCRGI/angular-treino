@@ -1,0 +1,79 @@
+<section class="pricing section" id="precos">
+  <div class="container">
+    <div class="pricing__header">
+      <div class="section-label">Preços transparentes</div>
+      <h2 class="section-title">
+        Simples, sem surpresas,
+        <span class="text-gradient"> escalável</span>
+      </h2>
+      <p class="section-subtitle">
+        Comece grátis e cresça com a gente. Sem taxas ocultas, sem letras miúdas.
+      </p>
+
+      <!-- Toggle -->
+      <div class="pricing__toggle">
+        <span [class.active]="!annual()">Mensal</span>
+        <button class="toggle-switch" [class.on]="annual()" (click)="annual.set(!annual())">
+          <span class="toggle-thumb"></span>
+        </button>
+        <span [class.active]="annual()">Anual <span class="save-badge">Economize 20%</span></span>
+      </div>
+    </div>
+
+    <div class="pricing__grid">
+      @for (plan of plans; track plan.name) {
+        <div class="plan-card" [class.highlighted]="plan.highlighted">
+          @if (plan.highlighted && plan.badge) {
+            <div class="plan-badge">{{ plan.badge }}</div>
+          }
+          <div class="plan-icon">{{ plan.icon }}</div>
+          <h3 class="plan-name">{{ plan.name }}</h3>
+          <p class="plan-desc">{{ plan.description }}</p>
+
+          <div class="plan-price">
+            @if (plan.priceMonthly > 0) {
+              <span class="plan-price__amount">
+                R$ {{ annual() ? plan.priceAnnual : plan.priceMonthly }}
+              </span>
+              <span class="plan-price__suffix">{{ plan.priceSuffix }}</span>
+            } @else {
+              <span class="plan-price__amount plan-price--custom">{{ plan.priceLabel }}</span>
+            }
+          </div>
+
+          <div class="plan-fee">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            {{ plan.txFee }} por transação
+          </div>
+
+          <a href="#" class="btn plan-cta" [class.btn-primary]="plan.highlighted" [class.btn-outline-primary]="!plan.highlighted">
+            {{ plan.cta }}
+          </a>
+
+          <div class="plan-features">
+            @for (feature of plan.features; track feature) {
+              <div class="plan-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="check-icon"><path d="M20 6L9 17l-5-5"/></svg>
+                {{ feature }}
+              </div>
+            }
+            @for (feature of plan.notIncluded; track feature) {
+              <div class="plan-feature plan-feature--no">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="x-icon"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                {{ feature }}
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- FAQ hint -->
+    <div class="pricing__note">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      Precisa de algo especial?
+      <a href="#">Fale com nossa equipe de vendas</a>
+      para uma proposta personalizada.
+    </div>
+  </div>
+</section>

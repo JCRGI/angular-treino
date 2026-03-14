@@ -1,0 +1,38 @@
+<nav class="navbar" [class.scrolled]="scrolled()">
+  <div class="container navbar__inner">
+    <!-- Logo -->
+    <a href="#" class="navbar__logo">
+      <span class="logo-icon">D</span>
+      <span class="logo-text">Dom <span class="logo-accent">Pagamentos</span></span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="navbar__links">
+      @for (link of navLinks; track link.label) {
+        <li><a [href]="link.href" class="navbar__link">{{ link.label }}</a></li>
+      }
+    </ul>
+
+    <!-- CTA Buttons -->
+    <div class="navbar__actions">
+      <a href="#" class="btn btn-secondary btn-small">Entrar</a>
+      <a href="#" class="btn btn-primary btn-small">Começar grátis</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="navbar__hamburger" (click)="toggleMobile()" [class.open]="mobileOpen()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="navbar__mobile" [class.open]="mobileOpen()">
+    @for (link of navLinks; track link.label) {
+      <a [href]="link.href" class="navbar__mobile-link" (click)="closeMobile()">{{ link.label }}</a>
+    }
+    <div class="navbar__mobile-actions">
+      <a href="#" class="btn btn-secondary">Entrar</a>
+      <a href="#" class="btn btn-primary">Começar grátis</a>
+    </div>
+  </div>
+</nav>

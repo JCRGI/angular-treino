@@ -1,0 +1,39 @@
+<section class="stats section section--light">
+  <div class="container">
+    <div class="stats__header">
+      <div class="section-label">Números que impressionam</div>
+      <h2 class="section-title">
+        Confiado por empresas que
+        <span class="text-gradient"> movem o mundo</span>
+      </h2>
+      <p class="section-subtitle">
+        Da startup ao Fortune 500, empresas de todos os tamanhos escolhem o Dom Pagamentos para processar sua receita.
+      </p>
+    </div>
+
+    <div class="stats__grid">
+      @for (stat of stats; track stat.value) {
+        <div class="stat-card">
+          <div class="stat-card__value text-gradient">{{ stat.value }}</div>
+          <div class="stat-card__label">{{ stat.label }}</div>
+          <div class="stat-card__bar"></div>
+        </div>
+      }
+    </div>
+
+    <!-- Logos -->
+    <div class="logos-section">
+      <p class="logos-label">Utilizado por líderes de mercado</p>
+      <div class="logos-track">
+        <div class="logos-row">
+          @for (logo of logos; track logo.name) {
+            <div class="logo-pill">{{ logo.name }}</div>
+          }
+          @for (logo of logos; track logo.name) {
+            <div class="logo-pill">{{ logo.name }}</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
