@@ -26,6 +26,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.30</lombok.version>
         <springdoc.version>2.3.0</springdoc.version>
+        <flyway.version>10.8.1</flyway.version>
     </properties>
 
     <dependencyManagement>
@@ -107,6 +108,8 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- ===== Security — JWT ===== -->
