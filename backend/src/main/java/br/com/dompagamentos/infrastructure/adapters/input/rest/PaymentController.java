@@ -1,7 +1,9 @@
 package br.com.dompagamentos.infrastructure.adapters.input.rest;
 
+import br.com.dompagamentos.application.ports.input.CancelPaymentInputPort;
 import br.com.dompagamentos.application.ports.input.GetTransactionInputPort;
 import br.com.dompagamentos.application.ports.input.ProcessPaymentInputPort;
+import br.com.dompagamentos.application.ports.input.RefundPaymentInputPort;
 import br.com.dompagamentos.domain.model.Payment;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentRequestDTO;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentResponseDTO;
@@ -24,17 +26,24 @@ public class PaymentController {
 
     private final ProcessPaymentInputPort processPayment;
     private final GetTransactionInputPort getTransaction;
+    private final RefundPaymentInputPort refundPayment;
+    private final CancelPaymentInputPort cancelPayment;
 
     public PaymentController(ProcessPaymentInputPort processPayment,
-                             GetTransactionInputPort getTransaction) {
+                             GetTransactionInputPort getTransaction,
+                             RefundPaymentInputPort refundPayment,
+                             CancelPaymentInputPort cancelPayment) {
         this.processPayment = processPayment;
         this.getTransaction = getTransaction;
+        this.refundPayment = refundPayment;
+        this.cancelPayment = cancelPayment;
     }
 
     @PostMapping
-    @Operation(summary = "Criar cobrança", description = "Cria uma nova cobrança para um cliente. O PSP é selecionado automaticamente com base no volume do merchant.")
+    @Operation(summary = "Criar cobrança",
+               description = "Cria uma nova cobrança. O PSP é selecionado automaticamente pelo volume do merchant.")
     public ResponseEntity<PaymentResponseDTO> create(@Valid @RequestBody PaymentRequestDTO request) {
-        var command = new ProcessPaymentInputPort.Command(
+        Payment payment = processPayment.execute(new ProcessPaymentInputPort.Command(
                 request.merchantId(),
                 request.customerName(),
                 request.customerEmail(),
@@ -44,8 +53,7 @@ public class PaymentController {
                 request.description(),
                 request.dueDate(),
                 request.installments()
-        );
-        Payment payment = processPayment.execute(command);
+        ));
         return ResponseEntity.status(HttpStatus.CREATED).body(PaymentResponseDTO.from(payment));
     }
 
@@ -64,5 +72,21 @@ public class PaymentController {
         List<PaymentResponseDTO> payments = getTransaction.findByMerchant(merchantId, page, size)
                 .stream().map(PaymentResponseDTO::from).toList();
         return ResponseEntity.ok(payments);
+    }
+
+    @PostMapping("/{id}/refund")
+    @Operation(summary = "Solicitar estorno",
+               description = "Solicita o estorno de uma cobrança já recebida ou confirmada.")
+    public ResponseEntity<Void> refund(@PathVariable UUID id) {
+        refundPayment.execute(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/cancel")
+    @Operation(summary = "Cancelar cobrança",
+               description = "Cancela uma cobrança que ainda não foi recebida.")
+    public ResponseEntity<Void> cancel(@PathVariable UUID id) {
+        cancelPayment.execute(id);
+        return ResponseEntity.noContent().build();
     }
 }

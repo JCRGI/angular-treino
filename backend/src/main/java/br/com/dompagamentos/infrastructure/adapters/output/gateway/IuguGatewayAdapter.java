@@ -3,6 +3,7 @@ package br.com.dompagamentos.infrastructure.adapters.output.gateway;
 import br.com.dompagamentos.application.ports.output.PaymentGatewayOutputPort;
 import br.com.dompagamentos.domain.model.Merchant;
 import br.com.dompagamentos.domain.model.Payment;
+import br.com.dompagamentos.domain.model.Subscription;
 import br.com.dompagamentos.domain.model.enums.PspProvider;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -117,6 +118,22 @@ public class IuguGatewayAdapter implements PaymentGatewayOutputPort {
             log.error("Erro ao estornar fatura iugu {}: {}", pspPaymentId, e.getResponseBodyAsString());
             throw new GatewayException("Falha ao estornar pagamento no iugu", PspProvider.IUGU);
         }
+    }
+
+    @Override
+    public SubscriptionGatewayResponse createSubscription(Subscription subscription, Merchant merchant) {
+        // iugu não é usado para assinaturas nesta plataforma — Asaas é o PSP padrão para recorrência
+        throw new GatewayException("Assinaturas não suportadas no iugu nesta plataforma", PspProvider.IUGU);
+    }
+
+    @Override
+    public void cancelSubscription(String pspSubscriptionId) {
+        throw new GatewayException("Assinaturas não suportadas no iugu nesta plataforma", PspProvider.IUGU);
+    }
+
+    @Override
+    public java.math.BigDecimal getBalance() {
+        throw new GatewayException("Consulta de saldo não disponível no iugu nesta plataforma", PspProvider.IUGU);
     }
 
     // ===== Helpers =====

@@ -24,15 +24,22 @@ import java.util.Optional;
 @Component
 public class WebhookProcessingRoute extends RouteBuilder {
 
-    // Mapeamento de status Asaas → domínio
-    private static final Map<String, PaymentStatus> ASAAS_STATUS_MAP = Map.of(
-            "PAYMENT_CONFIRMED", PaymentStatus.CONFIRMED,
-            "PAYMENT_RECEIVED", PaymentStatus.RECEIVED,
-            "PAYMENT_OVERDUE", PaymentStatus.OVERDUE,
-            "PAYMENT_DELETED", PaymentStatus.CANCELLED,
-            "PAYMENT_REFUNDED", PaymentStatus.REFUNDED,
-            "PAYMENT_CHARGEBACK_REQUESTED", PaymentStatus.CHARGEBACK_REQUESTED,
-            "PAYMENT_CHARGEBACK_DISPUTE", PaymentStatus.CHARGEBACK_DISPUTE
+    // Mapeamento de eventos Asaas → status de domínio
+    // Referência: https://docs.asaas.com/reference/webhook
+    private static final Map<String, PaymentStatus> ASAAS_STATUS_MAP = Map.ofEntries(
+            Map.entry("PAYMENT_CONFIRMED", PaymentStatus.CONFIRMED),
+            Map.entry("PAYMENT_RECEIVED", PaymentStatus.RECEIVED),
+            Map.entry("PAYMENT_OVERDUE", PaymentStatus.OVERDUE),
+            Map.entry("PAYMENT_DELETED", PaymentStatus.CANCELLED),
+            Map.entry("PAYMENT_RESTORED", PaymentStatus.PENDING),
+            Map.entry("PAYMENT_REFUNDED", PaymentStatus.REFUNDED),
+            Map.entry("PAYMENT_PARTIALLY_REFUNDED", PaymentStatus.REFUND_REQUESTED),
+            Map.entry("PAYMENT_CHARGEBACK_REQUESTED", PaymentStatus.CHARGEBACK_REQUESTED),
+            Map.entry("PAYMENT_CHARGEBACK_DISPUTE", PaymentStatus.CHARGEBACK_DISPUTE),
+            Map.entry("PAYMENT_AWAITING_CHARGEBACK_REVERSAL", PaymentStatus.AWAITING_CHARGEBACK_REVERSAL),
+            Map.entry("PAYMENT_DUNNING_REQUESTED", PaymentStatus.DUNNING_REQUESTED),
+            Map.entry("PAYMENT_DUNNING_RECEIVED", PaymentStatus.DUNNING_RECEIVED),
+            Map.entry("PAYMENT_AWAITING_RISK_ANALYSIS", PaymentStatus.PROCESSING)
     );
 
     // Mapeamento de status iugu → domínio
