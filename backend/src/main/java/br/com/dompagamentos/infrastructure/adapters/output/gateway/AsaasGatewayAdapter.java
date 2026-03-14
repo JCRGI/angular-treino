@@ -1,6 +1,7 @@
 package br.com.dompagamentos.infrastructure.adapters.output.gateway;
 
 import br.com.dompagamentos.application.ports.output.PaymentGatewayOutputPort;
+import br.com.dompagamentos.application.ports.output.PaymentLinkGatewayOutputPort;
 import br.com.dompagamentos.domain.model.Merchant;
 import br.com.dompagamentos.domain.model.Payment;
 import br.com.dompagamentos.domain.model.Subscription;
@@ -29,7 +30,7 @@ import java.math.RoundingMode;
  *  3. Para PIX: o QR code vem no campo pix.payload da resposta
  */
 @Component(AsaasGatewayAdapter.BEAN_NAME)
-public class AsaasGatewayAdapter implements PaymentGatewayOutputPort {
+public class AsaasGatewayAdapter implements PaymentGatewayOutputPort, PaymentLinkGatewayOutputPort {
 
     public static final String BEAN_NAME = "ASAAS_GATEWAY";
     private static final Logger log = LoggerFactory.getLogger(AsaasGatewayAdapter.class);
@@ -212,6 +213,48 @@ public class AsaasGatewayAdapter implements PaymentGatewayOutputPort {
         } catch (HttpClientErrorException e) {
             log.error("Erro ao consultar saldo Asaas: {}", e.getResponseBodyAsString());
             throw new GatewayException("Falha ao consultar saldo no Asaas", PspProvider.ASAAS);
+        }
+    }
+
+    // ===== Payment Link =====
+
+    /**
+     * Cria um payment link no Asaas (POST /paymentLinks).
+     * O link não exige CPF do pagador — o cliente escolhe o método ao acessar a URL.
+     *
+     * @param merchantExternalId walletId do merchant no Asaas (pode ser null para conta principal)
+     * @param command            dados do link
+     */
+    @Override
+    public PaymentLinkResult createPaymentLink(String merchantExternalId, Command command) {
+        BigDecimal valueInReais = command.amountInCents() != null
+                ? command.amountInCents().divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)
+                : null;
+
+        ObjectNode body = objectMapper.createObjectNode();
+        body.put("name", command.name());
+        body.put("billingType", "UNDEFINED"); // pagador escolhe o método
+        body.put("chargeType", "DETACHED");
+
+        if (valueInReais != null) {
+            body.put("value", valueInReais.doubleValue());
+        }
+        if (command.description() != null) {
+            body.put("description", command.description());
+        }
+        if (command.expiresAt() != null) {
+            body.put("endDate", command.expiresAt().toString());
+        }
+
+        try {
+            JsonNode response = post("/paymentLinks", body);
+            String id  = response.path("id").asText();
+            String url = response.path("url").asText();
+            log.info("Payment link criado no Asaas: id={}, url={}", id, url);
+            return new PaymentLinkResult(id, url);
+        } catch (HttpClientErrorException e) {
+            log.error("Erro ao criar payment link no Asaas: {} — {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new GatewayException("Falha ao criar payment link no Asaas: " + e.getMessage(), PspProvider.ASAAS);
         }
     }
 
