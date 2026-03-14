@@ -1,0 +1,140 @@
+<app-navbar />
+
+<main>
+  <!-- Hero -->
+  <app-hero />
+
+  <!-- Stats -->
+  <app-stats />
+
+  <!-- Features / Produtos -->
+  <app-features />
+
+  <!-- Solutions -->
+  <app-solutions />
+
+  <!-- Developer Section -->
+  <section class="devs section" id="devs">
+    <div class="container">
+      <div class="devs__layout">
+        <div class="devs__content">
+          <div class="section-label">Para desenvolvedores</div>
+          <h2 class="section-title">
+            APIs poderosas,
+            <span class="text-gradient"> documentação excelente</span>
+          </h2>
+          <p class="section-subtitle">
+            Integre em minutos com nossos SDKs para Node.js, Python, PHP, Ruby, Go e muito mais. Documentação completa com exemplos reais.
+          </p>
+          <div class="devs__steps">
+            @for (step of devSteps; track step.step) {
+              <div class="dev-step">
+                <div class="dev-step__num">{{ step.step }}</div>
+                <div class="dev-step__info">
+                  <h4>{{ step.title }}</h4>
+                  <p>{{ step.description }}</p>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="devs__actions">
+            <a href="#" class="btn btn-primary">
+              Ver documentação
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="btn btn-secondary">GitHub</a>
+          </div>
+        </div>
+
+        <div class="devs__terminal">
+          <div class="terminal">
+            <div class="terminal__header">
+              <div class="terminal__dots">
+                <span style="background:#FF5F57"></span>
+                <span style="background:#FEBC2E"></span>
+                <span style="background:#28C840"></span>
+              </div>
+              <span class="terminal__title">~ dom-pagamentos</span>
+            </div>
+            <div class="terminal__body">
+              <div class="terminal__line">
+                <span class="t-prompt">$</span>
+                <span class="t-cmd">npm install dom-pagamentos</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-output">added 1 package in 0.8s</span>
+              </div>
+              <div class="terminal__line t-blank"></div>
+              <div class="terminal__line">
+                <span class="t-prompt">$</span>
+                <span class="t-cmd">node pagamento.js</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-success">✓ Cobrança criada com sucesso!</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-json">&#123;</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-key">  "id"</span><span class="t-json">: </span><span class="t-string">"pay_abc123xyz"</span><span class="t-json">,</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-key">  "status"</span><span class="t-json">: </span><span class="t-string">"aprovado"</span><span class="t-json">,</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-key">  "valor"</span><span class="t-json">: </span><span class="t-number">10000</span><span class="t-json">,</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-key">  "metodo"</span><span class="t-json">: </span><span class="t-string">"pix"</span>
+              </div>
+              <div class="terminal__line">
+                <span class="t-json">&#125;</span>
+              </div>
+              <div class="terminal__line terminal__line--cursor">
+                <span class="t-prompt">$</span>
+                <span class="t-cursor">|</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SDK badges -->
+          <div class="sdk-badges">
+            @for (sdk of ['Node.js', 'Python', 'PHP', 'Ruby', 'Go', 'Java']; track sdk) {
+              <span class="sdk-badge">{{ sdk }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security section -->
+  <section class="security section section--light">
+    <div class="container">
+      <div class="security__header">
+        <div class="section-label">Segurança</div>
+        <h2 class="section-title">
+          Construído com
+          <span class="text-gradient"> segurança em primeiro lugar</span>
+        </h2>
+        <p class="section-subtitle">
+          Sua infraestrutura financeira precisa ser confiável. Investimos pesado em segurança para você dormir tranquilo.
+        </p>
+      </div>
+      <div class="security__grid">
+        @for (feat of securityFeatures; track feat.title) {
+          <div class="sec-card">
+            <div class="sec-card__icon">{{ feat.icon }}</div>
+            <h3 class="sec-card__title">{{ feat.title }}</h3>
+            <p class="sec-card__desc">{{ feat.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <app-pricing />
+</main>
+
+<app-footer />

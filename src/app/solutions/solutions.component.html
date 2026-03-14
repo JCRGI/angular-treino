@@ -1,0 +1,49 @@
+<section class="solutions section section--light" id="solucoes">
+  <div class="container">
+    <div class="solutions__header">
+      <div class="section-label">Soluções</div>
+      <h2 class="section-title">
+        Desenvolvido para
+        <span class="text-gradient"> todo tipo de negócio</span>
+      </h2>
+      <p class="section-subtitle">
+        Soluções personalizadas para empresas em qualquer estágio de crescimento.
+      </p>
+    </div>
+
+    <div class="solutions__grid">
+      @for (sol of solutions; track sol.title) {
+        <div class="solution-card">
+          <div class="solution-card__icon" [style.background]="sol.color + '15'" [style.color]="sol.color">
+            {{ sol.icon }}
+          </div>
+          <h3 class="solution-card__title">{{ sol.title }}</h3>
+          <p class="solution-card__desc">{{ sol.description }}</p>
+          <ul class="solution-card__features">
+            @for (f of sol.features; track f) {
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" [style.color]="sol.color"><path d="M20 6L9 17l-5-5"/></svg>
+                {{ f }}
+              </li>
+            }
+          </ul>
+          <a href="#" class="solution-card__cta" [style.color]="sol.color">
+            {{ sol.cta }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <div class="solution-card__bar" [style.background]="sol.color"></div>
+        </div>
+      }
+    </div>
+
+    <!-- Trusted section -->
+    <div class="trusted">
+      <p class="trusted__label">Empresas que já confiam no Dom Pagamentos</p>
+      <div class="trusted__logos">
+        @for (brand of trustedBy; track brand.name) {
+          <div class="trusted__logo">{{ brand.name }}</div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

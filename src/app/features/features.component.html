@@ -1,0 +1,99 @@
+<section class="features section" id="produtos">
+  <div class="container">
+    <div class="features__header">
+      <div class="section-label">Produtos</div>
+      <h2 class="section-title">
+        Tudo que você precisa para
+        <span class="text-gradient"> aceitar e gerenciar pagamentos</span>
+      </h2>
+      <p class="section-subtitle">
+        Um conjunto completo de ferramentas para cada modelo de negócio, do checkout ao faturamento.
+      </p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="features__tabs">
+      @for (tab of tabs; track tab.label; let i = $index) {
+        <button
+          class="tab-btn"
+          [class.active]="activeTab() === i"
+          (click)="setTab(i)">
+          <span>{{ tab.icon }}</span>
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    <!-- Feature content -->
+    @for (feature of features; track feature.title; let i = $index) {
+      @if (activeTab() === i) {
+        <div class="feature-panel">
+          <div class="feature-panel__content">
+            <div class="feature-icon" [style.background]="feature.color + '20'" [style.color]="feature.color">
+              {{ feature.icon }}
+            </div>
+            <div class="feature-tag" [style.color]="feature.color" [style.background]="feature.color + '15'" [style.border-color]="feature.color + '30'">
+              {{ feature.tag }}
+            </div>
+            <h3 class="feature-panel__title">{{ feature.title }}</h3>
+            <p class="feature-panel__description">{{ feature.description }}</p>
+            <ul class="feature-highlights">
+              @for (h of feature.highlights; track h) {
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" [style.color]="feature.color"><path d="M20 6L9 17l-5-5"/></svg>
+                  {{ h }}
+                </li>
+              }
+            </ul>
+            <a href="#" class="btn btn-outline-primary" [style.--color-primary-light]="feature.color" [style.--color-border-purple]="feature.color + '40'">
+              Saiba mais
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Code preview -->
+          <div class="feature-panel__visual">
+            <div class="code-window">
+              <div class="code-window__header">
+                <div class="code-window__dots">
+                  <span style="background:#FF5F57"></span>
+                  <span style="background:#FEBC2E"></span>
+                  <span style="background:#28C840"></span>
+                </div>
+                <span class="code-window__title">dom-pagamentos.ts</span>
+              </div>
+              <div class="code-window__body">
+                <pre class="code-block"><code><span class="code-import">import</span> DomPagamentos <span class="code-import">from</span> <span class="code-string">'dom-pagamentos'</span>;
+
+<span class="code-keyword">const</span> dom = <span class="code-new">new</span> DomPagamentos(<span class="code-string">'sk_live_...'</span>);
+
+<span class="code-comment">// Criar cobrança em 3 linhas</span>
+<span class="code-keyword">const</span> pagamento = <span class="code-keyword">await</span> dom.cobrar.criar(&#123;
+  valor: <span class="code-number">100000</span>, <span class="code-comment">// R$ 1.000,00</span>
+  metodo: <span class="code-string">'{{ i === 0 ? "pix" : i === 1 ? "recorrente" : i === 2 ? "split" : "cartao" }}'</span>,
+  descricao: <span class="code-string">'{{ feature.tag }}'</span>,
+&#125;);
+
+<span class="code-comment">// Resultado instantâneo ✓</span>
+console.log(pagamento.status); <span class="code-comment">// aprovado</span></code></pre>
+              </div>
+            </div>
+
+            <!-- Response card -->
+            <div class="response-card" [style.border-color]="feature.color + '30'">
+              <div class="response-card__header" [style.color]="feature.color">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                Resposta em &lt; 200ms
+              </div>
+              <div class="response-card__body">
+                <div class="response-field"><span>status</span><span class="response-value success">aprovado</span></div>
+                <div class="response-field"><span>id</span><span class="response-value">pay_{{ i }}abc123</span></div>
+                <div class="response-field"><span>método</span><span class="response-value">{{ feature.tag }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</section>
