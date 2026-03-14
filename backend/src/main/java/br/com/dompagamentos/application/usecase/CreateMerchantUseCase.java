@@ -51,6 +51,10 @@ public class CreateMerchantUseCase implements CreateMerchantInputPort {
                 command.phone()
         );
 
+        if (command.callbackUrl() != null && !command.callbackUrl().isBlank()) {
+            merchant.registerCallbackUrl(command.callbackUrl());
+        }
+
         // Cria subconta no Asaas (PSP padrão para novos merchants)
         try {
             String externalId = gateways.get(PspProvider.ASAAS).createSubAccount(merchant);

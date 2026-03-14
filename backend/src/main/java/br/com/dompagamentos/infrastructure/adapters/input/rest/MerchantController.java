@@ -28,7 +28,8 @@ public class MerchantController {
     public ResponseEntity<MerchantResponseDTO> create(@Valid @RequestBody MerchantRequestDTO request) {
         Merchant merchant = createMerchant.execute(
                 new CreateMerchantInputPort.Command(
-                        request.name(), request.document(), request.email(), request.phone()
+                        request.name(), request.document(), request.email(), request.phone(),
+                        request.callbackUrl()
                 )
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(MerchantResponseDTO.from(merchant));
@@ -40,12 +41,13 @@ public class MerchantController {
             String document,
             String email,
             String preferredPsp,
+            String callbackUrl,
             java.time.LocalDateTime createdAt
     ) {
         static MerchantResponseDTO from(Merchant m) {
             return new MerchantResponseDTO(
                     m.getId(), m.getName(), m.getDocument(), m.getEmail(),
-                    m.getPreferredPsp().name(), m.getCreatedAt()
+                    m.getPreferredPsp().name(), m.getCallbackUrl(), m.getCreatedAt()
             );
         }
     }

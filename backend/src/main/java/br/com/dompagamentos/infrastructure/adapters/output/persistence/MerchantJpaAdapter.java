@@ -56,6 +56,7 @@ public class MerchantJpaAdapter implements MerchantRepositoryOutputPort {
                 .preferredPsp(m.getPreferredPsp())
                 .pspExternalId(m.getPspExternalId())
                 .active(m.isActive())
+                .callbackUrl(m.getCallbackUrl())
                 .createdAt(m.getCreatedAt())
                 .updatedAt(m.getUpdatedAt())
                 .build();
@@ -65,7 +66,8 @@ public class MerchantJpaAdapter implements MerchantRepositoryOutputPort {
         return new Merchant(
                 e.getId(), e.getName(), e.getDocument(), e.getEmail(), e.getPhone(),
                 e.getMonthlyVolumeInCents(), e.getPreferredPsp(), e.getPspExternalId(),
-                e.isActive(), e.getCreatedAt(), e.getUpdatedAt()
+                e.isActive(), e.getCreatedAt(), e.getUpdatedAt(),
+                e.getCallbackUrl()
         );
     }
 }

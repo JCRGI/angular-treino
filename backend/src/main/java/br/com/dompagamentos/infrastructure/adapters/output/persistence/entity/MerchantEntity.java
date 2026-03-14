@@ -45,6 +45,9 @@ public class MerchantEntity {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @Column(name = "callback_url", length = 500)
+    private String callbackUrl;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

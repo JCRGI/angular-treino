@@ -13,6 +13,7 @@ public interface CreateMerchantInputPort {
             String name,
             String document,
             String email,
-            String phone
+            String phone,
+            String callbackUrl
     ) {}
 }

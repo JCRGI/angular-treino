@@ -1,11 +1,14 @@
 package br.com.dompagamentos.infrastructure.adapters.input.camel;
 
+import br.com.dompagamentos.application.ports.output.MerchantRepositoryOutputPort;
 import br.com.dompagamentos.application.ports.output.PaymentRepositoryOutputPort;
+import br.com.dompagamentos.domain.model.Merchant;
 import br.com.dompagamentos.domain.model.Payment;
 import br.com.dompagamentos.domain.model.enums.PaymentStatus;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -51,9 +54,15 @@ public class WebhookProcessingRoute extends RouteBuilder {
     );
 
     private final PaymentRepositoryOutputPort paymentRepository;
+    private final MerchantRepositoryOutputPort merchantRepository;
+    private final ObjectMapper objectMapper;
 
-    public WebhookProcessingRoute(PaymentRepositoryOutputPort paymentRepository) {
+    public WebhookProcessingRoute(PaymentRepositoryOutputPort paymentRepository,
+                                  MerchantRepositoryOutputPort merchantRepository,
+                                  ObjectMapper objectMapper) {
         this.paymentRepository = paymentRepository;
+        this.merchantRepository = merchantRepository;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -129,6 +138,47 @@ public class WebhookProcessingRoute extends RouteBuilder {
                     paymentRepository.save(payment);
 
                     log.info("Pagamento {} atualizado para status {} via webhook", payment.getId(), newStatus);
-                });
+
+                    // Passa o pagamento salvo para a próxima etapa
+                    exchange.getIn().setBody(payment);
+                })
+                .process(exchange -> {
+                    Payment payment = exchange.getIn().getBody(Payment.class);
+                    if (payment == null) return;
+
+                    Optional<Merchant> merchantOpt = merchantRepository.findById(payment.getMerchantId());
+                    if (merchantOpt.isEmpty()) return;
+
+                    Merchant merchant = merchantOpt.get();
+                    String callbackUrl = merchant.getCallbackUrl();
+                    if (callbackUrl == null || callbackUrl.isBlank()) return;
+
+                    OutboundWebhookPayload outboundPayload = new OutboundWebhookPayload(
+                            "PAYMENT_STATUS_CHANGED",
+                            payment.getId().toString(),
+                            payment.getMerchantId().toString(),
+                            payment.getStatus().name(),
+                            payment.getAmountInCents(),
+                            payment.getPspPaymentId(),
+                            payment.getUpdatedAt().toString()
+                    );
+
+                    exchange.getIn().setHeader("callbackUrl", callbackUrl);
+                    exchange.getIn().setBody(outboundPayload);
+                })
+                .filter(header("callbackUrl").isNotNull())
+                .to("direct:outbound-webhook");
+
+        // ===== Rota de saída: notifica o merchant via HTTP POST =====
+        from("direct:outbound-webhook")
+                .routeId("outbound-webhook-dispatcher")
+                .process(exchange -> {
+                    OutboundWebhookPayload payload = exchange.getIn().getBody(OutboundWebhookPayload.class);
+                    exchange.getIn().setBody(objectMapper.writeValueAsString(payload));
+                    exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/json");
+                    exchange.getIn().setHeader(Exchange.HTTP_METHOD, "POST");
+                })
+                .toD("${header.callbackUrl}?throwExceptionOnFailure=true")
+                .log("Webhook de saída enviado para ${header.callbackUrl} — paymentId ${header.callbackUrl}");
     }
 }

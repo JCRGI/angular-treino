@@ -2,6 +2,7 @@ package br.com.dompagamentos.infrastructure.adapters.input.rest.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record MerchantRequestDTO(
@@ -19,5 +20,9 @@ public record MerchantRequestDTO(
         String email,
 
         @Size(max = 20)
-        String phone
+        String phone,
+
+        @Pattern(regexp = "https?://.+", message = "callbackUrl deve ser uma URL válida (http ou https)")
+        @Size(max = 500)
+        String callbackUrl
 ) {}

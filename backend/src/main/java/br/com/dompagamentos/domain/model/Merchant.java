@@ -22,6 +22,7 @@ public class Merchant {
     private PspProvider preferredPsp;
     private String pspExternalId;     // ID da subconta no PSP
     private boolean active;
+    private String callbackUrl;           // URL para notificações de eventos de pagamento
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -48,7 +49,8 @@ public class Merchant {
     public Merchant(UUID id, String name, String document, String email, String phone,
                     BigDecimal monthlyVolumeInCents, PspProvider preferredPsp,
                     String pspExternalId, boolean active,
-                    LocalDateTime createdAt, LocalDateTime updatedAt) {
+                    LocalDateTime createdAt, LocalDateTime updatedAt,
+                    String callbackUrl) {
         this.id = id;
         this.name = name;
         this.document = document;
@@ -60,6 +62,7 @@ public class Merchant {
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.callbackUrl = callbackUrl;
     }
 
     public void updateMonthlyVolume(BigDecimal newVolumeInCents) {
@@ -75,6 +78,11 @@ public class Merchant {
 
     public void deactivate() {
         this.active = false;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void registerCallbackUrl(String url) {
+        this.callbackUrl = url;
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -94,6 +102,7 @@ public class Merchant {
     public PspProvider getPreferredPsp() { return preferredPsp; }
     public String getPspExternalId() { return pspExternalId; }
     public boolean isActive() { return active; }
+    public String getCallbackUrl() { return callbackUrl; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
