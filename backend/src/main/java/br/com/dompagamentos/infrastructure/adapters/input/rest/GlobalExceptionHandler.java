@@ -1,10 +1,12 @@
 package br.com.dompagamentos.infrastructure.adapters.input.rest;
 
 import br.com.dompagamentos.domain.exception.DomainException;
+import br.com.dompagamentos.domain.exception.InvalidCredentialsException;
 import br.com.dompagamentos.domain.exception.MerchantNotFoundException;
 import br.com.dompagamentos.domain.exception.PaymentNotFoundException;
 import br.com.dompagamentos.domain.exception.ResourceAccessDeniedException;
 import br.com.dompagamentos.domain.exception.SubscriptionNotFoundException;
+import br.com.dompagamentos.domain.exception.UserAlreadyExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -49,6 +51,22 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleAccessDenied(ResourceAccessDeniedException ex) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
         pd.setTitle("Acesso negado");
+        pd.setProperty("timestamp", Instant.now());
+        return pd;
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        pd.setTitle("Credenciais inválidas");
+        pd.setProperty("timestamp", Instant.now());
+        return pd;
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ProblemDetail handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+        pd.setTitle("Usuário já existe");
         pd.setProperty("timestamp", Instant.now());
         return pd;
     }

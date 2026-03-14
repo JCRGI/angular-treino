@@ -6,12 +6,12 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
+/**
+ * O merchantId é resolvido automaticamente a partir do token de autenticação —
+ * não é necessário informá-lo no body.
+ */
 public record SubscriptionRequestDTO(
-
-        @NotNull(message = "merchantId é obrigatório")
-        UUID merchantId,
 
         @NotBlank(message = "Nome do cliente é obrigatório")
         @Size(max = 200)
@@ -35,7 +35,7 @@ public record SubscriptionRequestDTO(
         SubscriptionCycle cycle,
 
         @NotNull(message = "Data do próximo vencimento é obrigatória")
-        @FutureOrPresent(message = "Data do próximo vencimento deve ser hoje ou no futuro")
+        @FutureOrPresent(message = "Data deve ser hoje ou no futuro")
         LocalDate nextDueDate,
 
         @Size(max = 500)

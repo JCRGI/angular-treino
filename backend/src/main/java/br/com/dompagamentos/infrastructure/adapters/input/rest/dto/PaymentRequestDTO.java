@@ -5,12 +5,12 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
+/**
+ * O merchantId é resolvido automaticamente a partir do token de autenticação —
+ * não é necessário informá-lo no body.
+ */
 public record PaymentRequestDTO(
-
-        @NotNull(message = "merchantId é obrigatório")
-        UUID merchantId,
 
         @NotBlank(message = "Nome do cliente é obrigatório")
         @Size(max = 200)

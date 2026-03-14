@@ -7,8 +7,8 @@ import br.com.dompagamentos.application.ports.input.RefundPaymentInputPort;
 import br.com.dompagamentos.domain.model.Payment;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentRequestDTO;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentResponseDTO;
+import br.com.dompagamentos.infrastructure.security.MerchantContext;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -40,10 +40,11 @@ public class PaymentController {
 
     @PostMapping
     @Operation(summary = "Criar cobrança",
-               description = "Cria uma nova cobrança. O PSP é selecionado automaticamente pelo volume do merchant.")
+               description = "Cria uma cobrança para o merchant autenticado. O PSP é selecionado automaticamente.")
     public ResponseEntity<PaymentResponseDTO> create(@Valid @RequestBody PaymentRequestDTO request) {
+        UUID merchantId = MerchantContext.currentId();
         Payment payment = processPayment.execute(new ProcessPaymentInputPort.Command(
-                request.merchantId(),
+                merchantId,
                 request.customerName(),
                 request.customerEmail(),
                 request.customerDocument(),
@@ -57,46 +58,38 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar cobrança por ID",
-               description = "Retorna a cobrança somente se pertencer ao merchantId informado.")
-    public ResponseEntity<PaymentResponseDTO> findById(
-            @PathVariable UUID id,
-            @Parameter(description = "ID do merchant dono da cobrança", required = true)
-            @RequestParam UUID merchantId) {
+    @Operation(summary = "Buscar cobrança por ID")
+    public ResponseEntity<PaymentResponseDTO> findById(@PathVariable UUID id) {
+        UUID merchantId = MerchantContext.currentId();
         return ResponseEntity.ok(PaymentResponseDTO.from(getTransaction.findByIdAndMerchant(id, merchantId)));
     }
 
-    @GetMapping("/merchant/{merchantId}")
-    @Operation(summary = "Listar cobranças do merchant")
-    public ResponseEntity<List<PaymentResponseDTO>> findByMerchant(
-            @PathVariable UUID merchantId,
+    @GetMapping
+    @Operation(summary = "Listar cobranças do merchant autenticado")
+    public ResponseEntity<List<PaymentResponseDTO>> list(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        List<PaymentResponseDTO> payments = getTransaction.findByMerchant(merchantId, page, size)
-                .stream().map(PaymentResponseDTO::from).toList();
-        return ResponseEntity.ok(payments);
+        UUID merchantId = MerchantContext.currentId();
+        return ResponseEntity.ok(
+                getTransaction.findByMerchant(merchantId, page, size)
+                        .stream().map(PaymentResponseDTO::from).toList()
+        );
     }
 
     @PostMapping("/{id}/refund")
-    @Operation(summary = "Solicitar estorno",
-               description = "Solicita o estorno de uma cobrança. Valida que pertence ao merchant informado.")
-    public ResponseEntity<Void> refund(
-            @PathVariable UUID id,
-            @RequestParam UUID merchantId) {
-        // Valida propriedade antes de estornar
-        getTransaction.findByIdAndMerchant(id, merchantId);
+    @Operation(summary = "Solicitar estorno")
+    public ResponseEntity<Void> refund(@PathVariable UUID id) {
+        UUID merchantId = MerchantContext.currentId();
+        getTransaction.findByIdAndMerchant(id, merchantId); // valida propriedade
         refundPayment.execute(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/cancel")
-    @Operation(summary = "Cancelar cobrança",
-               description = "Cancela uma cobrança. Valida que pertence ao merchant informado.")
-    public ResponseEntity<Void> cancel(
-            @PathVariable UUID id,
-            @RequestParam UUID merchantId) {
-        // Valida propriedade antes de cancelar
-        getTransaction.findByIdAndMerchant(id, merchantId);
+    @Operation(summary = "Cancelar cobrança")
+    public ResponseEntity<Void> cancel(@PathVariable UUID id) {
+        UUID merchantId = MerchantContext.currentId();
+        getTransaction.findByIdAndMerchant(id, merchantId); // valida propriedade
         cancelPayment.execute(id);
         return ResponseEntity.noContent().build();
     }
