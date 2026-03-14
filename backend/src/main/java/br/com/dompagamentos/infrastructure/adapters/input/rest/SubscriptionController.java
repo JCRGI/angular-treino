@@ -7,6 +7,7 @@ import br.com.dompagamentos.domain.model.Subscription;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.SubscriptionRequestDTO;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.SubscriptionResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import java.util.UUID;
 /**
  * REST controller para assinaturas recorrentes.
  * Usa a API de subscriptions do Asaas: https://docs.asaas.com/reference/criar-nova-assinatura
+ *
+ * Isolamento de tenant: endpoints de ID exigem merchantId e validam propriedade.
  */
 @RestController
 @RequestMapping("/api/v1/subscriptions")
@@ -57,9 +60,15 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar assinatura por ID")
-    public ResponseEntity<SubscriptionResponseDTO> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(SubscriptionResponseDTO.from(getSubscription.findById(id)));
+    @Operation(summary = "Buscar assinatura por ID",
+               description = "Retorna a assinatura somente se pertencer ao merchantId informado.")
+    public ResponseEntity<SubscriptionResponseDTO> findById(
+            @PathVariable UUID id,
+            @Parameter(description = "ID do merchant dono da assinatura", required = true)
+            @RequestParam UUID merchantId) {
+        Subscription sub = getSubscription.findById(id);
+        sub.assertOwnedBy(merchantId);
+        return ResponseEntity.ok(SubscriptionResponseDTO.from(sub));
     }
 
     @GetMapping("/merchant/{merchantId}")
@@ -76,8 +85,14 @@ public class SubscriptionController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Cancelar assinatura")
-    public ResponseEntity<Void> cancel(@PathVariable UUID id) {
+    @Operation(summary = "Cancelar assinatura",
+               description = "Cancela a assinatura. Valida que pertence ao merchant informado.")
+    public ResponseEntity<Void> cancel(
+            @PathVariable UUID id,
+            @RequestParam UUID merchantId) {
+        // Valida propriedade antes de cancelar
+        Subscription sub = getSubscription.findById(id);
+        sub.assertOwnedBy(merchantId);
         cancelSubscription.execute(id);
         return ResponseEntity.noContent().build();
     }

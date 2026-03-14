@@ -85,6 +85,17 @@ public class Subscription {
         this.updatedAt = updatedAt;
     }
 
+    /**
+     * Valida que a assinatura pertence ao merchantId informado.
+     * Garante isolamento de tenant sem precisar de autenticação.
+     */
+    public void assertOwnedBy(UUID expectedMerchantId) {
+        if (!this.merchantId.equals(expectedMerchantId)) {
+            throw new br.com.dompagamentos.domain.exception.ResourceAccessDeniedException(
+                    "assinatura", this.id);
+        }
+    }
+
     public void confirmWithPspData(String pspSubscriptionId, LocalDate nextDueDate) {
         this.pspSubscriptionId = pspSubscriptionId;
         this.nextDueDate = nextDueDate;

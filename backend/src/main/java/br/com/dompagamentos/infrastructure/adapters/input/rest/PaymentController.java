@@ -8,7 +8,7 @@ import br.com.dompagamentos.domain.model.Payment;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentRequestDTO;
 import br.com.dompagamentos.infrastructure.adapters.input.rest.dto.PaymentResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/payments")
 @Tag(name = "Pagamentos", description = "Criação e consulta de cobranças")
-@SecurityRequirement(name = "bearerAuth")
 public class PaymentController {
 
     private final ProcessPaymentInputPort processPayment;
@@ -58,9 +57,13 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar cobrança por ID")
-    public ResponseEntity<PaymentResponseDTO> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(PaymentResponseDTO.from(getTransaction.findById(id)));
+    @Operation(summary = "Buscar cobrança por ID",
+               description = "Retorna a cobrança somente se pertencer ao merchantId informado.")
+    public ResponseEntity<PaymentResponseDTO> findById(
+            @PathVariable UUID id,
+            @Parameter(description = "ID do merchant dono da cobrança", required = true)
+            @RequestParam UUID merchantId) {
+        return ResponseEntity.ok(PaymentResponseDTO.from(getTransaction.findByIdAndMerchant(id, merchantId)));
     }
 
     @GetMapping("/merchant/{merchantId}")
@@ -76,16 +79,24 @@ public class PaymentController {
 
     @PostMapping("/{id}/refund")
     @Operation(summary = "Solicitar estorno",
-               description = "Solicita o estorno de uma cobrança já recebida ou confirmada.")
-    public ResponseEntity<Void> refund(@PathVariable UUID id) {
+               description = "Solicita o estorno de uma cobrança. Valida que pertence ao merchant informado.")
+    public ResponseEntity<Void> refund(
+            @PathVariable UUID id,
+            @RequestParam UUID merchantId) {
+        // Valida propriedade antes de estornar
+        getTransaction.findByIdAndMerchant(id, merchantId);
         refundPayment.execute(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/cancel")
     @Operation(summary = "Cancelar cobrança",
-               description = "Cancela uma cobrança que ainda não foi recebida.")
-    public ResponseEntity<Void> cancel(@PathVariable UUID id) {
+               description = "Cancela uma cobrança. Valida que pertence ao merchant informado.")
+    public ResponseEntity<Void> cancel(
+            @PathVariable UUID id,
+            @RequestParam UUID merchantId) {
+        // Valida propriedade antes de cancelar
+        getTransaction.findByIdAndMerchant(id, merchantId);
         cancelPayment.execute(id);
         return ResponseEntity.noContent().build();
     }

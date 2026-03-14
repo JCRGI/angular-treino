@@ -3,6 +3,7 @@ package br.com.dompagamentos.infrastructure.adapters.input.rest;
 import br.com.dompagamentos.domain.exception.DomainException;
 import br.com.dompagamentos.domain.exception.MerchantNotFoundException;
 import br.com.dompagamentos.domain.exception.PaymentNotFoundException;
+import br.com.dompagamentos.domain.exception.ResourceAccessDeniedException;
 import br.com.dompagamentos.domain.exception.SubscriptionNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,14 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleSubscriptionNotFound(SubscriptionNotFoundException ex) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         pd.setTitle("Assinatura não encontrada");
+        pd.setProperty("timestamp", Instant.now());
+        return pd;
+    }
+
+    @ExceptionHandler(ResourceAccessDeniedException.class)
+    public ProblemDetail handleAccessDenied(ResourceAccessDeniedException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
+        pd.setTitle("Acesso negado");
         pd.setProperty("timestamp", Instant.now());
         return pd;
     }
