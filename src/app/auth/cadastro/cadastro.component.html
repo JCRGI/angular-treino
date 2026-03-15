@@ -1,0 +1,291 @@
+<div class="cadastro-page">
+  <!-- Background -->
+  <div class="cadastro-bg">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="cadastro-header">
+    <a routerLink="/" class="logo">
+      <span class="logo-icon">D</span>
+      <span class="logo-text">Dom <span class="logo-accent">Pagamentos</span></span>
+    </a>
+  </header>
+
+  <main class="cadastro-main">
+    <!-- ── STEP INDICATOR ─────────────────────────────────── -->
+    @if (step() !== 'sucesso') {
+      <div class="steps-indicator">
+        <div class="step-item" [class.active]="step() === 'empresa'" [class.done]="step() === 'acesso'">
+          <div class="step-circle">
+            @if (step() === 'acesso') {
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+            } @else {
+              1
+            }
+          </div>
+          <span class="step-label">Sua empresa</span>
+        </div>
+        <div class="step-connector" [class.done]="step() === 'acesso'"></div>
+        <div class="step-item" [class.active]="step() === 'acesso'">
+          <div class="step-circle">2</div>
+          <span class="step-label">Dados de acesso</span>
+        </div>
+      </div>
+    }
+
+    <!-- ── CARD ───────────────────────────────────────────── -->
+    <div class="cadastro-card">
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STEP 1: EMPRESA -->
+      @if (step() === 'empresa') {
+        <div class="card-header">
+          <h1 class="card-title">Crie sua conta</h1>
+          <p class="card-subtitle">Comece a aceitar pagamentos em minutos, sem taxa de setup.</p>
+        </div>
+
+        <form [formGroup]="empresaForm" (ngSubmit)="goToAcesso()" novalidate>
+
+          <div class="field">
+            <label class="label" for="name">Nome completo / Razão social</label>
+            <input
+              id="name"
+              type="text"
+              class="input"
+              [class.input--error]="isInvalid(empresaForm, 'name')"
+              formControlName="name"
+              placeholder="Maria Silva ME"
+              autocomplete="organization"
+            />
+            @if (isInvalid(empresaForm, 'name')) {
+              <span class="field-error">Nome é obrigatório (máx. 200 caracteres)</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label" for="document">CPF ou CNPJ</label>
+            <input
+              id="document"
+              type="text"
+              class="input"
+              [class.input--error]="isInvalid(empresaForm, 'document')"
+              formControlName="document"
+              placeholder="Somente números (11 ou 14 dígitos)"
+              inputmode="numeric"
+              (input)="formatDocument($event)"
+            />
+            @if (isInvalid(empresaForm, 'document')) {
+              <span class="field-error">Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label" for="phone">Telefone</label>
+            <input
+              id="phone"
+              type="tel"
+              class="input"
+              [class.input--error]="isInvalid(empresaForm, 'phone')"
+              formControlName="phone"
+              placeholder="11999998888"
+              inputmode="numeric"
+              (input)="formatPhone($event)"
+            />
+            @if (isInvalid(empresaForm, 'phone')) {
+              <span class="field-error">Telefone é obrigatório</span>
+            }
+          </div>
+
+          @if (errorMsg()) {
+            <div class="alert alert--error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              {{ errorMsg() }}
+            </div>
+          }
+
+          <button type="submit" class="btn-submit">
+            Continuar
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <p class="signin-link">Já tem conta? <a routerLink="/">Entrar</a></p>
+      }
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STEP 2: ACESSO -->
+      @if (step() === 'acesso') {
+        <div class="card-header">
+          <h1 class="card-title">Dados de acesso</h1>
+          <p class="card-subtitle">Estes são os dados para acessar seu painel de controle.</p>
+        </div>
+
+        <form [formGroup]="acessoForm" (ngSubmit)="submit()" novalidate>
+
+          <div class="field">
+            <label class="label" for="email">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              class="input"
+              [class.input--error]="isInvalid(acessoForm, 'email')"
+              formControlName="email"
+              placeholder="voce@empresa.com.br"
+              autocomplete="email"
+            />
+            @if (isInvalid(acessoForm, 'email')) {
+              <span class="field-error">Informe um e-mail válido</span>
+            }
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label class="label" for="password">Senha</label>
+              <input
+                id="password"
+                type="password"
+                class="input"
+                [class.input--error]="isInvalid(acessoForm, 'password')"
+                formControlName="password"
+                placeholder="Mínimo 8 caracteres"
+                autocomplete="new-password"
+              />
+              @if (isInvalid(acessoForm, 'password')) {
+                <span class="field-error">Mínimo 8 caracteres</span>
+              }
+            </div>
+
+            <div class="field">
+              <label class="label" for="confirmPassword">Confirmar senha</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                class="input"
+                [class.input--error]="isInvalid(acessoForm, 'confirmPassword') || passwordMismatch"
+                formControlName="confirmPassword"
+                placeholder="Repita a senha"
+                autocomplete="new-password"
+              />
+              @if (passwordMismatch) {
+                <span class="field-error">As senhas não coincidem</span>
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="callbackUrl">
+              URL de callback
+              <span class="label-optional">opcional</span>
+            </label>
+            <input
+              id="callbackUrl"
+              type="url"
+              class="input"
+              [class.input--error]="isInvalid(acessoForm, 'callbackUrl')"
+              formControlName="callbackUrl"
+              placeholder="https://seu-sistema.com/webhooks/pagamentos"
+              autocomplete="off"
+            />
+            <span class="field-hint">Receberá notificações quando um pagamento for confirmado.</span>
+            @if (isInvalid(acessoForm, 'callbackUrl')) {
+              <span class="field-error">URL inválida. Use https://…</span>
+            }
+          </div>
+
+          @if (errorMsg()) {
+            <div class="alert alert--error">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              {{ errorMsg() }}
+            </div>
+          }
+
+          <div class="btn-row">
+            <button type="button" class="btn-back" (click)="backToEmpresa()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Voltar
+            </button>
+            <button type="submit" class="btn-submit btn-submit--flex" [disabled]="loading()">
+              @if (loading()) {
+                <span class="spinner"></span>
+                Criando conta…
+              } @else {
+                Criar conta
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              }
+            </button>
+          </div>
+
+          <p class="terms">
+            Ao criar a conta você concorda com os
+            <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>.
+          </p>
+        </form>
+      }
+
+      <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STEP 3: SUCESSO -->
+      @if (step() === 'sucesso') {
+        <div class="success-wrap">
+          <div class="success-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          </div>
+          <h1 class="card-title">Conta criada!</h1>
+          <p class="card-subtitle">
+            Sua empresa foi registrada com sucesso. Agora gere sua API Key no painel para começar a receber pagamentos.
+          </p>
+
+          <div class="merchant-id-box">
+            <span class="merchant-id-label">Merchant ID</span>
+            <span class="merchant-id-value">{{ merchantId() }}</span>
+            <span class="merchant-id-hint">Guarde este ID — você precisará dele para suporte.</span>
+          </div>
+
+          <div class="next-steps">
+            <p class="next-steps__title">Próximos passos</p>
+            <ol class="next-steps__list">
+              <li>
+                <span class="step-num">1</span>
+                <span>Acesse o painel com o e-mail e senha criados</span>
+              </li>
+              <li>
+                <span class="step-num">2</span>
+                <span>Gere sua API Key (<code>dpag_…</code>) em <strong>Configurações → API Keys</strong></span>
+              </li>
+              <li>
+                <span class="step-num">3</span>
+                <span>Use o header <code>X-Api-Key</code> para criar links de pagamento</span>
+              </li>
+            </ol>
+          </div>
+
+          <a routerLink="/" class="btn-submit" style="text-align:center; text-decoration:none; display:flex; justify-content:center;">
+            Ir para o painel
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      }
+
+    </div>
+    <!-- /card -->
+
+    <!-- Trust bar -->
+    @if (step() !== 'sucesso') {
+      <div class="trust-bar">
+        <span class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Dados criptografados
+        </span>
+        <span class="trust-sep">·</span>
+        <span class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          Sem taxa de setup
+        </span>
+        <span class="trust-sep">·</span>
+        <span class="trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+          Cancele quando quiser
+        </span>
+      </div>
+    }
+  </main>
+</div>
