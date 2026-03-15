@@ -1,0 +1,442 @@
+<div class="dashboard">
+
+  <!-- ══════════════════════════════════════════ SIDEBAR -->
+  <aside class="sidebar" [class.sidebar--open]="sidebarOpen()">
+
+    <!-- logo -->
+    <div class="sidebar__logo">
+      <div class="logo-icon">D</div>
+      <span class="logo-text">Dom <span class="logo-accent">Pay</span></span>
+    </div>
+
+    <!-- nav -->
+    <nav class="sidebar__nav">
+      <button class="nav-item" [class.nav-item--active]="activeSection() === 'overview'" (click)="navigate('overview')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Visão Geral
+      </button>
+      <button class="nav-item" [class.nav-item--active]="activeSection() === 'payments'" (click)="navigate('payments')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagamentos
+      </button>
+      <button class="nav-item" [class.nav-item--active]="activeSection() === 'apikeys'" (click)="navigate('apikeys')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        API Keys
+      </button>
+      <button class="nav-item" [class.nav-item--active]="activeSection() === 'settings'" (click)="navigate('settings')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Configurações
+      </button>
+    </nav>
+
+    <!-- user / logout -->
+    <div class="sidebar__footer">
+      <div class="sidebar-user">
+        <div class="avatar">{{ initials(session()?.name ?? '?') }}</div>
+        <div class="sidebar-user__info">
+          <span class="sidebar-user__name">{{ session()?.name }}</span>
+          <span class="sidebar-user__email">{{ session()?.email }}</span>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()" title="Sair">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════════ OVERLAY (mobile) -->
+  @if (sidebarOpen()) {
+    <div class="sidebar-overlay" (click)="sidebarOpen.set(false)"></div>
+  }
+
+  <!-- ══════════════════════════════════════════ MAIN -->
+  <div class="main">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <button class="hamburger" (click)="sidebarOpen.update(v => !v)" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="topbar__title">
+        @switch (activeSection()) {
+          @case ('overview')  { <span>Visão Geral</span> }
+          @case ('payments')  { <span>Pagamentos</span> }
+          @case ('apikeys')   { <span>API Keys</span> }
+          @case ('settings')  { <span>Configurações</span> }
+        }
+      </div>
+
+      <div class="topbar__right">
+        <div class="env-badge">Sandbox</div>
+        <div class="avatar avatar--sm">{{ initials(session()?.name ?? '?') }}</div>
+      </div>
+    </header>
+
+    <!-- ─────────────────────────────────────── VISÃO GERAL -->
+    @if (activeSection() === 'overview') {
+      <section class="content">
+
+        <!-- stat cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <span class="stat-card__label">Recebido este mês</span>
+              <span class="stat-card__value">{{ currency(statsMonth()) }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <span class="stat-card__label">Total de transações</span>
+              <span class="stat-card__value">{{ allTransactions().length }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <span class="stat-card__label">Taxa de aprovação</span>
+              <span class="stat-card__value">{{ approvalRate() }}%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--orange">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
+            <div class="stat-card__body">
+              <span class="stat-card__label">Merchant ID</span>
+              <span class="stat-card__value stat-card__value--mono">{{ session()?.merchantId?.slice(0,8) }}…</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- recent transactions -->
+        <div class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Transações recentes</h2>
+            <button class="btn-link" (click)="navigate('payments')">Ver todas →</button>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Método</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (tx of recentTransactions(); track tx.id) {
+                  <tr>
+                    <td class="td-customer">{{ tx.customer }}</td>
+                    <td><span class="method-chip">{{ tx.methodIcon }} {{ tx.method }}</span></td>
+                    <td class="td-amount">{{ currency(tx.amount) }}</td>
+                    <td><span class="badge" [class]="'badge--' + tx.status">{{ statusLabel(tx.status) }}</span></td>
+                    <td class="td-date">{{ dateStr(tx.date) }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- quick actions -->
+        <div class="quick-actions">
+          <button class="action-card" (click)="navigate('apikeys')">
+            <div class="action-card__icon">🔑</div>
+            <div class="action-card__label">Gerar API Key</div>
+          </button>
+          <button class="action-card" (click)="navigate('payments')">
+            <div class="action-card__icon">📊</div>
+            <div class="action-card__label">Ver pagamentos</div>
+          </button>
+          <button class="action-card" (click)="navigate('settings')">
+            <div class="action-card__icon">⚙️</div>
+            <div class="action-card__label">Configurações</div>
+          </button>
+        </div>
+
+      </section>
+    }
+
+    <!-- ─────────────────────────────────────── PAGAMENTOS -->
+    @if (activeSection() === 'payments') {
+      <section class="content">
+
+        <!-- filters -->
+        <div class="filters">
+          <div class="filter-tabs">
+            @for (f of filterOptions; track f.value) {
+              <button
+                class="filter-tab"
+                [class.filter-tab--active]="statusFilter() === f.value"
+                (click)="setFilter(f.value)"
+              >{{ f.label }}</button>
+            }
+          </div>
+          <span class="filter-count">{{ filteredTransactions().length }} transações</span>
+        </div>
+
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cliente</th>
+                  <th>Método</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (tx of pagedTransactions(); track tx.id) {
+                  <tr>
+                    <td class="td-mono">{{ tx.id.slice(0, 16) }}…</td>
+                    <td class="td-customer">{{ tx.customer }}</td>
+                    <td><span class="method-chip">{{ tx.methodIcon }} {{ tx.method }}</span></td>
+                    <td class="td-amount">{{ currency(tx.amount) }}</td>
+                    <td><span class="badge" [class]="'badge--' + tx.status">{{ statusLabel(tx.status) }}</span></td>
+                    <td class="td-date">{{ dateStr(tx.date) }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- pagination -->
+          @if (totalPages() > 1) {
+            <div class="pagination">
+              <button class="pg-btn" (click)="prevPage()" [disabled]="currentPage() === 1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+              </button>
+              @for (p of pageNumbers(); track p) {
+                <button
+                  class="pg-btn"
+                  [class.pg-btn--active]="currentPage() === p"
+                  (click)="currentPage.set(p)"
+                >{{ p }}</button>
+              }
+              <button class="pg-btn" (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+              </button>
+            </div>
+          }
+        </div>
+
+      </section>
+    }
+
+    <!-- ─────────────────────────────────────── API KEYS -->
+    @if (activeSection() === 'apikeys') {
+      <section class="content">
+
+        <!-- generate key -->
+        <div class="panel panel--highlight">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Gerar nova API Key</h2>
+              <p class="panel__subtitle">Use o header <code>X-Api-Key</code> em todas as suas requisições.</p>
+            </div>
+            <button class="btn-primary" (click)="generateKey()" [disabled]="generatingKey()">
+              @if (generatingKey()) {
+                <span class="spinner spinner--sm"></span> Gerando…
+              } @else {
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Gerar chave
+              }
+            </button>
+          </div>
+
+          @if (keyError()) {
+            <div class="alert alert--error">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              {{ keyError() }}
+            </div>
+          }
+
+          @if (newKey()) {
+            <div class="new-key-box">
+              <div class="new-key-box__header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span>Copie agora! Esta chave não será exibida novamente.</span>
+              </div>
+              <div class="new-key-box__key">
+                <code>{{ newKey() }}</code>
+                <div class="new-key-box__actions">
+                  <button class="icon-btn" (click)="copyKey()" [title]="newKeyCopied() ? 'Copiado!' : 'Copiar'">
+                    @if (newKeyCopied()) {
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+                    } @else {
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    }
+                  </button>
+                  <button class="icon-btn" (click)="dismissKey()" title="Fechar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- existing keys -->
+        <div class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Chaves existentes</h2>
+          </div>
+          @if (apiKeys().length === 0) {
+            <div class="empty-state">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+              <p>Nenhuma chave gerada ainda.</p>
+            </div>
+          } @else {
+            <div class="keys-list">
+              @for (k of apiKeys(); track k.id) {
+                <div class="key-row">
+                  <div class="key-row__main">
+                    <code class="key-row__value">{{ k.maskedKey }}</code>
+                    <div class="key-row__meta">
+                      <span>Criada em {{ dateStr(k.createdAt) }}</span>
+                      @if (k.lastUsed) { <span>· Último uso {{ dateStr(k.lastUsed) }}</span> }
+                    </div>
+                  </div>
+                  <button class="icon-btn" (click)="copyText(k.maskedKey)" title="Copiar">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- usage example -->
+        <div class="panel panel--code">
+          <div class="panel__header">
+            <h2 class="panel__title">Exemplo de uso</h2>
+          </div>
+          <pre class="code-block"><code>curl -X POST https://api.dompagamentos.com/v1/payments \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: dpag_live_sua_chave_aqui" \
+  -d '&#123;
+    "amount": 10000,
+    "method": "pix",
+    "customer": &#123; "name": "João Silva", "document": "12345678901" &#125;
+  &#125;'</code></pre>
+        </div>
+
+      </section>
+    }
+
+    <!-- ─────────────────────────────────────── CONFIGURAÇÕES -->
+    @if (activeSection() === 'settings') {
+      <section class="content">
+
+        <div class="settings-grid">
+          <!-- profile form -->
+          <div class="panel">
+            <div class="panel__header">
+              <h2 class="panel__title">Dados da empresa</h2>
+            </div>
+
+            <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" novalidate class="settings-form">
+
+              <div class="field">
+                <label class="label">Nome / Razão social</label>
+                <input type="text" class="input" [class.input--error]="isSettingInvalid('name')" formControlName="name" placeholder="Sua empresa" />
+                @if (isSettingInvalid('name')) { <span class="field-error">Nome é obrigatório</span> }
+              </div>
+
+              <div class="field">
+                <label class="label">E-mail</label>
+                <input type="email" class="input input--readonly" [value]="session()?.email" readonly />
+                <span class="field-hint">O e-mail não pode ser alterado.</span>
+              </div>
+
+              <div class="field">
+                <label class="label">Telefone</label>
+                <input type="tel" class="input" [class.input--error]="isSettingInvalid('phone')" formControlName="phone" placeholder="11999998888" />
+                @if (isSettingInvalid('phone')) { <span class="field-error">Telefone é obrigatório</span> }
+              </div>
+
+              <div class="field">
+                <label class="label">
+                  URL de callback
+                  <span class="label-optional">opcional</span>
+                </label>
+                <input type="url" class="input" [class.input--error]="isSettingInvalid('callbackUrl')" formControlName="callbackUrl" placeholder="https://seu-sistema.com/webhooks" />
+                @if (isSettingInvalid('callbackUrl')) { <span class="field-error">URL inválida. Use https://…</span> }
+                <span class="field-hint">Notificações de pagamento serão enviadas para esta URL.</span>
+              </div>
+
+              <div class="settings-actions">
+                @if (settingsSaved()) {
+                  <span class="saved-msg">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+                    Salvo com sucesso
+                  </span>
+                }
+                <button type="submit" class="btn-primary" [disabled]="settingsSaving()">
+                  @if (settingsSaving()) {
+                    <span class="spinner spinner--sm"></span> Salvando…
+                  } @else {
+                    Salvar alterações
+                  }
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- account info -->
+          <div class="panel panel--side">
+            <div class="panel__header">
+              <h2 class="panel__title">Dados da conta</h2>
+            </div>
+            <div class="info-list">
+              <div class="info-item">
+                <span class="info-item__label">Merchant ID</span>
+                <div class="info-item__value-row">
+                  <code class="info-item__value">{{ session()?.merchantId }}</code>
+                  <button class="icon-btn" (click)="copyText(session()?.merchantId ?? '')" title="Copiar">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Ambiente</span>
+                <span class="info-item__value"><span class="env-badge">Sandbox</span></span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Plano</span>
+                <span class="info-item__value">Starter (Grátis)</span>
+              </div>
+            </div>
+
+            <div class="danger-zone">
+              <p class="danger-zone__title">Zona de risco</p>
+              <button class="btn-danger" (click)="logout()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sair da conta
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    }
+
+  </div>
+</div>

@@ -10,4 +10,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./auth/cadastro/cadastro.component').then(m => m.CadastroComponent)
   },
+  {
+    path: 'entrar',
+    loadComponent: () =>
+      import('./auth/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'painel',
+    loadComponent: () =>
+      import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
+  },
 ];

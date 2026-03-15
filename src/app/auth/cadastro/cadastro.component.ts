@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -10,6 +10,7 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { MerchantService } from '../../services/merchant.service';
+import { AuthService } from '../../services/auth.service';
 
 type Step = 'empresa' | 'acesso' | 'sucesso';
 
@@ -32,6 +33,8 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 export class CadastroComponent {
   private readonly fb = inject(FormBuilder);
   private readonly merchantService = inject(MerchantService);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   step = signal<Step>('empresa');
   loading = signal(false);
@@ -125,6 +128,13 @@ export class CadastroComponent {
         }).subscribe({
           next: () => {
             this.loading.set(false);
+            this.auth.saveSession({
+              token: '',
+              merchantId: merchant.id,
+              email: email.trim().toLowerCase(),
+              name: name.trim(),
+              phone: phone.replace(/\D/g, ''),
+            });
             this.step.set('sucesso');
           },
           error: (err) => {

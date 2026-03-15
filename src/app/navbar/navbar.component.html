@@ -15,7 +15,7 @@
 
     <!-- CTA Buttons -->
     <div class="navbar__actions">
-      <a href="#" class="btn btn-secondary btn-small">Entrar</a>
+      <a routerLink="/entrar" class="btn btn-secondary btn-small">Entrar</a>
       <a routerLink="/cadastro" class="btn btn-primary btn-small">Começar grátis</a>
     </div>
 
@@ -31,7 +31,7 @@
       <a [href]="link.href" class="navbar__mobile-link" (click)="closeMobile()">{{ link.label }}</a>
     }
     <div class="navbar__mobile-actions">
-      <a href="#" class="btn btn-secondary">Entrar</a>
+      <a routerLink="/entrar" class="btn btn-secondary" (click)="closeMobile()">Entrar</a>
       <a routerLink="/cadastro" class="btn btn-primary" (click)="closeMobile()">Começar grátis</a>
     </div>
   </div>
