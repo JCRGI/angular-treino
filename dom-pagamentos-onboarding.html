@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DOM Pagamentos – Guia de Onboarding</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f8f9fc;
+    color: #1a1d23;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── COVER ────────────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, #0f1923 0%, #1a2e44 60%, #0d3b6e 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,255,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .cover-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7dd3fc;
+    margin-bottom: 32px;
+  }
+  .cover h1 { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 8px; }
+  .cover h1 span { color: #38bdf8; }
+  .cover-subtitle { font-size: 22px; font-weight: 300; color: rgba(255,255,255,0.7); margin-bottom: 48px; }
+  .cover-divider { width: 80px; height: 3px; background: linear-gradient(90deg, #38bdf8, #34d399); border-radius: 2px; margin: 0 auto 48px; }
+  .cover-meta { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+  .cover-meta-item .label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .cover-meta-item .value { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+  /* ── PAGE ─────────────────────────────────────────── */
+  .page { max-width: 880px; margin: 0 auto; padding: 60px 48px; page-break-after: always; }
+  .page:last-of-type { page-break-after: auto; }
+
+  /* ── HEADINGS ─────────────────────────────────────── */
+  .section-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3b82f6; margin-bottom: 8px; }
+  h2 { font-size: 28px; font-weight: 700; color: #0f1923; margin-bottom: 6px; }
+  h3 { font-size: 15px; font-weight: 600; color: #1e3a5f; margin: 28px 0 10px; display: flex; align-items: center; gap: 10px; }
+  h3 .step-badge { background: #0f1923; color: #fff; font-size: 11px; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .page-lead { font-size: 15px; color: #64748b; margin-bottom: 36px; max-width: 640px; }
+  .section-divider { width: 48px; height: 3px; background: linear-gradient(90deg, #3b82f6, #06b6d4); border-radius: 2px; margin-bottom: 32px; }
+
+  /* ── PILLS ────────────────────────────────────────── */
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 10px; font-weight: 600; letter-spacing: 0.3px; }
+  .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+  .pill-green  { background: #dcfce7; color: #166534; }
+  .pill-amber  { background: #fef3c7; color: #92400e; }
+  .pill-violet { background: #f3e8ff; color: #6b21a8; }
+  .pill-gray   { background: #f1f5f9; color: #475569; }
+  .pill-red    { background: #fee2e2; color: #991b1b; }
+  .pill-post   { background: #dbeafe; color: #1d4ed8; font-family: 'Courier New', monospace; font-size: 10px; }
+  .pill-get    { background: #dcfce7; color: #166534; font-family: 'Courier New', monospace; font-size: 10px; }
+  .pill-delete { background: #fee2e2; color: #991b1b; font-family: 'Courier New', monospace; font-size: 10px; }
+
+  /* ── CODE ─────────────────────────────────────────── */
+  pre {
+    background: #0f1923;
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11.5px;
+    line-height: 1.75;
+    margin: 8px 0 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  pre .label {
+    position: absolute; top: 10px; right: 14px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #4a6fa5;
+  }
+  pre .c { color: #4a6fa5; }
+  pre .k { color: #7dd3fc; }
+  pre .s { color: #86efac; }
+  pre .n { color: #fbbf24; }
+  pre .m { color: #f9a8d4; }
+  pre .e { color: #f87171; }
+  pre .h { color: #c084fc; font-weight: 700; }
+
+  /* ── TABLES ───────────────────────────────────────── */
+  table.t {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 8px 0 20px;
+  }
+  table.t thead tr { background: #0f1923; color: #fff; }
+  table.t thead th { padding: 9px 13px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  table.t tbody tr:nth-child(odd)  { background: #f8fafc; }
+  table.t tbody tr:nth-child(even) { background: #fff; }
+  table.t tbody td { padding: 9px 13px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  table.t tbody tr:last-child td { border-bottom: none; }
+  table.t code { font-family: 'Courier New', monospace; font-size: 10.5px; background: #e2e8f0; padding: 1px 5px; border-radius: 3px; color: #1e3a5f; }
+
+  /* ── INFO / WARN / SUCCESS BOXES ─────────────────── */
+  .info-box  { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 13px 17px; font-size: 12px; color: #1e40af; margin: 10px 0 18px; }
+  .warn-box  { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 0 10px 10px 0; padding: 13px 17px; font-size: 12px; color: #92400e; margin: 10px 0 18px; }
+  .ok-box    { background: #f0fdf4; border-left: 4px solid #22c55e; border-radius: 0 10px 10px 0; padding: 13px 17px; font-size: 12px; color: #166534; margin: 10px 0 18px; }
+  .info-box strong, .warn-box strong, .ok-box strong { display: block; margin-bottom: 3px; font-size: 12.5px; }
+
+  /* ── TIMELINE VISUAL ──────────────────────────────── */
+  .timeline { position: relative; padding-left: 36px; margin: 20px 0 32px; }
+  .timeline::before { content: ''; position: absolute; left: 11px; top: 6px; bottom: 6px; width: 2px; background: #e2e8f0; }
+  .tl-item { position: relative; margin-bottom: 28px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -32px; top: 2px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #fff;
+  }
+  .tl-dot.blue   { background: #3b82f6; }
+  .tl-dot.green  { background: #22c55e; }
+  .tl-dot.amber  { background: #f59e0b; }
+  .tl-dot.violet { background: #a855f7; }
+  .tl-dot.slate  { background: #64748b; }
+  .tl-title { font-size: 14px; font-weight: 700; color: #1e3a5f; margin-bottom: 4px; }
+  .tl-desc  { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+  .tl-endpoint {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #0f1923; border-radius: 7px;
+    padding: 4px 12px; font-family: 'Courier New', monospace;
+    font-size: 11px; color: #e2e8f0; margin-bottom: 6px;
+  }
+
+  /* ── CARDS ────────────────────────────────────────── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 16px 0 28px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .card-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 10px; }
+  .card h4 { font-size: 13px; font-weight: 600; color: #1e3a5f; margin-bottom: 5px; }
+  .card p { font-size: 11.5px; color: #64748b; line-height: 1.5; }
+
+  /* ── SECURITY GRID ────────────────────────────────── */
+  .sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 24px; }
+  .sec-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; }
+  .sec-item .sec-tag { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; }
+  .sec-item .sec-title { font-size: 13px; font-weight: 600; color: #1e3a5f; margin-bottom: 5px; }
+  .sec-item p { font-size: 11.5px; color: #64748b; line-height: 1.5; }
+
+  /* ── DIAGRAM ──────────────────────────────────────── */
+  .diagram {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11.5px;
+    background: #0f1923;
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 22px;
+    line-height: 2;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    white-space: pre;
+  }
+  .diagram .cm { color: #3b82f6; font-weight: bold; }
+  .diagram .cd { color: #4ade80; font-weight: bold; }
+  .diagram .ca { color: #fbbf24; font-weight: bold; }
+  .diagram .ar { color: #94a3b8; }
+  .diagram .nt { color: #475569; font-style: italic; }
+  .diagram .ok { color: #4ade80; }
+  .diagram .er { color: #f87171; }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  .footer { text-align: center; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 22px; margin-top: 36px; }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 40px 40px; }
+    .cover { min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Documentação Técnica</div>
+  <h1>DOM <span>Pagamentos</span></h1>
+  <div class="cover-subtitle">Guia de Onboarding do Cliente</div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="label">Versão</div><div class="value">1.0.0</div></div>
+    <div class="cover-meta-item"><div class="label">Público</div><div class="value">Merchants / MEIs</div></div>
+    <div class="cover-meta-item"><div class="label">Etapas</div><div class="value">4 passos</div></div>
+    <div class="cover-meta-item"><div class="label">Data</div><div class="value">Março 2026</div></div>
+  </div>
+</div>
+
+<!-- ═══ PAGE 1 – VISÃO GERAL DO ONBOARDING ══════════════════════ -->
+<div class="page">
+  <div class="section-tag">01 · VISÃO GERAL</div>
+  <h2>Como se tornar um cliente DOM Pagamentos</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    O processo completo tem 4 etapas e pode ser concluído em menos de 5 minutos.
+    Ao final, você terá uma chave de API pronta para aceitar pagamentos.
+  </p>
+
+  <!-- journey cards -->
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon" style="background:#dbeafe">1</div>
+      <h4>Cadastro da empresa</h4>
+      <p>Registre seu CNPJ ou CPF. Criamos automaticamente uma subconta no Asaas para liquidação.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#dcfce7">2</div>
+      <h4>Conta de acesso</h4>
+      <p>Crie um e-mail + senha para acessar o painel. Cada merchant pode ter múltiplos usuários.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#fef3c7">3</div>
+      <h4>Login e JWT</h4>
+      <p>Autentique-se e receba um token JWT válido por 24 horas para gerenciar sua conta.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#f3e8ff">4</div>
+      <h4>Chave de API</h4>
+      <p>Gere a API Key (<code>dpag_…</code>) que será usada nas integrações do seu sistema.</p>
+    </div>
+  </div>
+
+  <!-- overview diagram -->
+  <div class="diagram"><span class="cm">  SEU SISTEMA</span>                        <span class="cd">DOM PAGAMENTOS API</span>               <span class="ca">ASAAS PSP</span>
+<span class="ar">      │                                        │                               │</span>
+<span class="ar">      │</span><span class="cm">── POST /merchants ─────────────────────►</span><span class="ar">│                               │</span>
+<span class="ar">      │</span>                                       <span class="ar">│</span><span class="cd">── criar subconta ─────────────►</span><span class="ar">│</span>
+<span class="ar">      │</span>                                       <span class="ar">│</span><span class="ca">◄── pspExternalId ──────────────</span><span class="ar">│</span>
+<span class="ar">      │</span><span class="cm">◄── 201 { merchantId } ──────────────────</span><span class="ar">│                               │</span>
+<span class="ar">      │</span>                                        <span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">── POST /auth/register ──────────────────►</span><span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">◄── 201 Created ────────────────────────</span><span class="ar">─│                               │</span>
+<span class="ar">      │</span>                                        <span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">── POST /auth/login ─────────────────────►</span><span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">◄── 200 { token (JWT 24h) } ─────────────</span><span class="ar">│                               │</span>
+<span class="ar">      │</span>                                        <span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">── POST /api-keys  [Bearer token] ───────►</span><span class="ar">│                               │</span>
+<span class="ar">      │</span><span class="cm">◄── 201 { key: "dpag_…" } ───────────────</span><span class="ar">│                               │</span>
+<span class="ar">      │</span>                                        <span class="ar">│                               │</span>
+<span class="ok">      ✅  PRONTO — use X-Api-Key: dpag_… em todas as requisições</span>
+</div>
+
+  <div class="ok-box">
+    <strong>Uma só base URL para tudo</strong>
+    Produção: <code>https://api.dompagamentos.com.br</code> &nbsp;·&nbsp;
+    Sandbox: <code>https://sandbox.dompagamentos.com.br</code>
+  </div>
+</div>
+
+<!-- ═══ PAGE 2 – PASSO 1 e 2 ════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">02 · CADASTRO</div>
+  <h2>Passo 1 — Registrar o Merchant</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    Endpoint público — não precisa de autenticação. Aceita CPF (11 dígitos) ou CNPJ (14 dígitos).
+    Ao salvar, o sistema cria automaticamente uma subconta Asaas vinculada ao seu documento.
+  </p>
+
+  <!-- request -->
+  <pre><span class="label">REQUEST</span><span class="m">POST</span> /api/v1/merchants
+<span class="k">Content-Type:</span> <span class="s">application/json</span>
+
+{
+  <span class="k">"name"</span>:        <span class="s">"Maria Silva ME"</span>,            <span class="c">// obrigatório · max 200 chars</span>
+  <span class="k">"document"</span>:    <span class="s">"12345678000195"</span>,           <span class="c">// obrigatório · CPF (11) ou CNPJ (14)</span>
+  <span class="k">"email"</span>:       <span class="s">"maria@exemplo.com.br"</span>,      <span class="c">// obrigatório · formato válido</span>
+  <span class="k">"phone"</span>:       <span class="s">"11999998888"</span>,              <span class="c">// obrigatório · max 20 chars</span>
+  <span class="k">"callbackUrl"</span>: <span class="s">"https://meu-site.com/pix"</span>  <span class="c">// opcional  · URL de notificação</span>
+}</pre>
+
+  <!-- response -->
+  <pre><span class="label">RESPONSE 201</span>{
+  <span class="k">"id"</span>:           <span class="s">"c3d4e5f6-…"</span>,           <span class="c">// merchantId — guarde este valor!</span>
+  <span class="k">"name"</span>:         <span class="s">"Maria Silva ME"</span>,
+  <span class="k">"document"</span>:     <span class="s">"12345678000195"</span>,
+  <span class="k">"email"</span>:        <span class="s">"maria@exemplo.com.br"</span>,
+  <span class="k">"preferredPsp"</span>: <span class="s">"ASAAS"</span>,                <span class="c">// definido automaticamente</span>
+  <span class="k">"callbackUrl"</span>:  <span class="s">"https://meu-site.com/pix"</span>,
+  <span class="k">"createdAt"</span>:    <span class="s">"2026-03-14T10:00:00Z"</span>
+}</pre>
+
+  <!-- validation table -->
+  <table class="t">
+    <thead><tr><th>Campo</th><th>Regra</th><th>Erro se inválido</th></tr></thead>
+    <tbody>
+      <tr><td><code>document</code></td><td>Único no sistema (CPF ou CNPJ)</td><td>409 Conflict</td></tr>
+      <tr><td><code>email</code></td><td>Formato RFC-5322 válido</td><td>400 VALIDATION_ERROR</td></tr>
+      <tr><td><code>name</code></td><td>Não vazio, máximo 200 caracteres</td><td>400 VALIDATION_ERROR</td></tr>
+      <tr><td><code>callbackUrl</code></td><td>URL completa com https:// (quando informada)</td><td>400 VALIDATION_ERROR</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <strong>Guarde o merchantId!</strong>
+    Ele é necessário no próximo passo (criação da conta de acesso ao painel).
+    Não há endpoint de "esqueci meu merchantId" — consulte pelo e-mail cadastrado.
+  </div>
+
+  <!-- PASSO 2 -->
+  <h2 style="margin-top:36px">Passo 2 — Criar conta de acesso (painel)</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    O merchant existe, mas ainda não tem login. Crie as credenciais de acesso ao painel
+    associando um e-mail e senha ao <code>merchantId</code> recebido no passo anterior.
+  </p>
+
+  <pre><span class="label">REQUEST</span><span class="m">POST</span> /api/v1/auth/register
+<span class="k">Content-Type:</span> <span class="s">application/json</span>
+
+{
+  <span class="k">"merchantId"</span>: <span class="s">"c3d4e5f6-…"</span>,          <span class="c">// ID do passo 1</span>
+  <span class="k">"email"</span>:      <span class="s">"maria@exemplo.com.br"</span>,  <span class="c">// e-mail do usuário do painel</span>
+  <span class="k">"password"</span>:   <span class="s">"MinhaS3nh@Segura"</span>       <span class="c">// mínimo 8 caracteres</span>
+}</pre>
+
+  <pre><span class="label">RESPONSE 201</span>{
+  <span class="k">"message"</span>: <span class="s">"Usuário criado com sucesso"</span>
+}</pre>
+
+  <div class="info-box">
+    A senha é armazenada como hash BCrypt — nunca em texto plano.
+    O mesmo merchantId pode ter múltiplos usuários (ex.: sócio + funcionário).
+  </div>
+</div>
+
+<!-- ═══ PAGE 3 – PASSO 3 e 4 ════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">03 · AUTENTICAÇÃO</div>
+  <h2>Passo 3 — Login e obtenção do JWT</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    Com as credenciais criadas no passo 2, faça login para obter o token JWT.
+    Ele é necessário para gerenciar API Keys e configurações do merchant.
+  </p>
+
+  <pre><span class="label">REQUEST</span><span class="m">POST</span> /api/v1/auth/login
+<span class="k">Content-Type:</span> <span class="s">application/json</span>
+
+{
+  <span class="k">"email"</span>:    <span class="s">"maria@exemplo.com.br"</span>,
+  <span class="k">"password"</span>: <span class="s">"MinhaS3nh@Segura"</span>
+}</pre>
+
+  <pre><span class="label">RESPONSE 200</span>{
+  <span class="k">"token"</span>:      <span class="s">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"</span>,
+  <span class="k">"merchantId"</span>: <span class="s">"c3d4e5f6-…"</span>,
+  <span class="k">"expiresAt"</span>:  <span class="s">"2026-03-15T10:00:00Z"</span>   <span class="c">// token válido por 24 horas</span>
+}</pre>
+
+  <div class="warn-box">
+    <strong>Token expira em 24 horas.</strong>
+    Implemente renovação automática no seu sistema ou peça ao usuário que faça login novamente.
+    Não há endpoint de refresh token — basta chamar <code>/auth/login</code> novamente.
+  </div>
+
+  <!-- PASSO 4 -->
+  <h2 style="margin-top:36px">Passo 4 — Gerar a chave de API (API Key)</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    A API Key é o método de autenticação para as integrações B2B (seu servidor → DOM).
+    Use o JWT do passo 3 no header <code>Authorization</code> para gerá-la.
+  </p>
+
+  <pre><span class="label">REQUEST</span><span class="m">POST</span> /api/v1/api-keys
+<span class="k">Authorization:</span> <span class="s">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…</span>
+<span class="k">Content-Type:</span>  <span class="s">application/json</span>
+
+{
+  <span class="k">"description"</span>: <span class="s">"Integração sistema ERP - produção"</span>
+}</pre>
+
+  <pre><span class="label">RESPONSE 201  ⚠ salve a key — ela nunca será exibida novamente!</span>{
+  <span class="k">"id"</span>:            <span class="s">"a1b2c3d4-…"</span>,
+  <span class="k">"key"</span>:           <span class="s">"dpag_8f3a2b1c9d0e4f5a6b7c8d9e0f1a2b3c4d5e6f7a"</span>,
+  <span class="k">"visiblePrefix"</span>: <span class="s">"dpag_8f3a2b1…"</span>,    <span class="c">// apenas para identificação futura</span>
+  <span class="k">"description"</span>:  <span class="s">"Integração sistema ERP - produção"</span>,
+  <span class="k">"createdAt"</span>:    <span class="s">"2026-03-14T10:00:00Z"</span>
+}</pre>
+
+  <div class="warn-box">
+    <strong>A chave completa aparece UMA ÚNICA VEZ.</strong>
+    O sistema armazena apenas o hash SHA-256 — não há como recuperar a chave depois.
+    Se perder, revogue e gere uma nova.
+  </div>
+
+  <h3><span class="step-badge" style="background:#22c55e">✓</span> Como usar a API Key nas requisições</h3>
+
+  <pre><span class="label">QUALQUER ENDPOINT AUTENTICADO</span><span class="m">POST</span> /api/v1/payments/link
+<span class="h">X-Api-Key: dpag_8f3a2b1c9d0e4f5a6b7c8d9e0f1a2b3c4d5e6f7a</span>
+<span class="k">Content-Type:</span> <span class="s">application/json</span>
+
+{
+  <span class="k">"name"</span>:          <span class="s">"Consultoria – Hora técnica"</span>,
+  <span class="k">"amountInCents"</span>: <span class="n">15000</span>
+}</pre>
+
+  <div class="ok-box">
+    <strong>Sem necessidade de JWT nas integrações!</strong>
+    O header <code>X-Api-Key</code> é suficiente para todas as operações de pagamento.
+    O JWT é necessário apenas para gerenciar a conta (gerar/revogar chaves, ver configurações).
+  </div>
+</div>
+
+<!-- ═══ PAGE 4 – GERENCIAR API KEYS ═════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">04 · GESTÃO DE CHAVES</div>
+  <h2>Gerenciar API Keys</h2>
+  <div class="section-divider"></div>
+
+  <h3><span class="step-badge" style="background:#3b82f6">?</span> Listar todas as chaves</h3>
+  <pre><span class="label">REQUEST</span><span class="m">GET</span> /api/v1/api-keys
+<span class="k">Authorization:</span> <span class="s">Bearer &lt;jwt&gt;</span></pre>
+
+  <pre><span class="label">RESPONSE 200</span>[
+  {
+    <span class="k">"id"</span>:            <span class="s">"a1b2c3d4-…"</span>,
+    <span class="k">"visiblePrefix"</span>: <span class="s">"dpag_8f3a2b1…"</span>,
+    <span class="k">"description"</span>:  <span class="s">"Integração sistema ERP - produção"</span>,
+    <span class="k">"active"</span>:        <span class="n">true</span>,
+    <span class="k">"createdAt"</span>:    <span class="s">"2026-03-14T10:00:00Z"</span>,
+    <span class="k">"lastUsedAt"</span>:   <span class="s">"2026-03-14T11:35:22Z"</span>   <span class="c">// monitoramento de uso</span>
+  }
+]</pre>
+
+  <div class="info-box">
+    O campo <code>key</code> (texto completo) <strong>nunca é retornado</strong> na listagem.
+    Use o <code>visiblePrefix</code> para identificar qual chave é qual.
+  </div>
+
+  <h3><span class="step-badge" style="background:#ef4444">×</span> Revogar uma chave</h3>
+  <pre><span class="label">REQUEST</span><span class="e">DELETE</span> /api/v1/api-keys/<span class="s">{id}</span>
+<span class="k">Authorization:</span> <span class="s">Bearer &lt;jwt&gt;</span></pre>
+
+  <pre><span class="label">RESPONSE 204 No Content</span><span class="c">// chave imediatamente invalidada — sem corpo na resposta</span></pre>
+
+  <div class="warn-box">
+    <strong>Revogação é permanente e imediata.</strong>
+    Qualquer requisição usando a chave revogada receberá <code>401 Unauthorized</code> instantaneamente.
+    Gere uma nova chave antes de revogar a antiga para evitar downtime.
+  </div>
+
+  <!-- multi-key strategy -->
+  <h3><span class="step-badge" style="background:#a855f7">★</span> Boas práticas com múltiplas chaves</h3>
+  <table class="t">
+    <thead><tr><th>Cenário</th><th>Recomendação</th></tr></thead>
+    <tbody>
+      <tr><td>Múltiplos ambientes</td><td>Crie uma chave para <em>produção</em> e outra para <em>staging</em> com descrições claras</td></tr>
+      <tr><td>Rotação de segurança</td><td>Gere nova chave → atualize seus sistemas → revogue a antiga. Zero downtime.</td></tr>
+      <tr><td>Suspeita de vazamento</td><td>Revogue imediatamente. A chave não pode ser recuperada por terceiros (apenas o hash é armazenado).</td></tr>
+      <tr><td>Times separados</td><td>Crie uma chave por time/sistema para rastrear <code>lastUsedAt</code> individualmente.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ PAGE 5 – SEGURANÇA ════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">05 · SEGURANÇA</div>
+  <h2>Modelo de Segurança</h2>
+  <div class="section-divider"></div>
+  <p class="page-lead">
+    DOM Pagamentos usa dois mecanismos de autenticação independentes, adequados para
+    cenários distintos.
+  </p>
+
+  <div class="sec-grid">
+    <div class="sec-item">
+      <div class="sec-tag">Painel / Gestão</div>
+      <div class="sec-title">JWT (Bearer Token)</div>
+      <p>Gerado via <code>POST /auth/login</code>. Válido por <strong>24 horas</strong>. Contém
+      <code>userId</code> (subject) e <code>merchantId</code> (claim) assinados com HS256.
+      Usado para criar/revogar API Keys e acessar configurações.</p>
+    </div>
+    <div class="sec-item">
+      <div class="sec-tag">Integração B2B</div>
+      <div class="sec-title">API Key (X-Api-Key)</div>
+      <p>Chave no formato <code>dpag_&lt;40 hex&gt;</code>. Armazenada como SHA-256.
+      Texto completo exibido <strong>apenas na criação</strong>. Header:
+      <code>X-Api-Key: dpag_…</code>. Registra <code>lastUsedAt</code> a cada uso.</p>
+    </div>
+    <div class="sec-item">
+      <div class="sec-tag">Senhas</div>
+      <div class="sec-title">BCrypt</div>
+      <p>Senha de acesso ao painel jamais armazenada em texto plano.
+      Algoritmo BCrypt com salt aleatório. Mínimo 8 caracteres exigido.</p>
+    </div>
+    <div class="sec-item">
+      <div class="sec-tag">Webhook de retorno</div>
+      <div class="sec-title">HMAC-SHA256</div>
+      <p>Cada callback enviado ao seu <code>callbackUrl</code> inclui o header
+      <code>X-DOM-Signature</code> assinado com sua API Key. Valide antes de processar.</p>
+    </div>
+  </div>
+
+  <h3><span class="step-badge" style="background:#3b82f6">i</span> Rotas públicas vs. protegidas</h3>
+  <table class="t">
+    <thead><tr><th>Rota</th><th>Autenticação</th><th>Motivo</th></tr></thead>
+    <tbody>
+      <tr><td><code>POST /api/v1/merchants</code></td><td><span class="pill pill-green">pública</span></td><td>Cadastro inicial — nenhuma credencial ainda existe</td></tr>
+      <tr><td><code>POST /api/v1/auth/register</code></td><td><span class="pill pill-green">pública</span></td><td>Criação de usuário — requer apenas merchantId válido</td></tr>
+      <tr><td><code>POST /api/v1/auth/login</code></td><td><span class="pill pill-green">pública</span></td><td>Autenticação — fornece as credenciais para receber token</td></tr>
+      <tr><td><code>POST /api/v1/webhooks/asaas</code></td><td><span class="pill pill-green">pública</span></td><td>Recebido pelo Asaas — autenticado por IP allowlist</td></tr>
+      <tr><td><code>POST /api/v1/payments/link</code></td><td><span class="pill pill-blue">API Key</span></td><td>Operação de pagamento — exige identidade do merchant</td></tr>
+      <tr><td><code>GET  /api/v1/payments/{id}</code></td><td><span class="pill pill-blue">API Key</span></td><td>Consulta de pagamento — isolamento por merchant</td></tr>
+      <tr><td><code>POST /api/v1/api-keys</code></td><td><span class="pill pill-violet">JWT</span></td><td>Gestão de chaves — exige sessão autenticada</td></tr>
+      <tr><td><code>GET  /api/v1/api-keys</code></td><td><span class="pill pill-violet">JWT</span></td><td>Listagem — apenas o dono pode ver suas chaves</td></tr>
+      <tr><td><code>DELETE /api/v1/api-keys/{id}</code></td><td><span class="pill pill-violet">JWT</span></td><td>Revogação — ação destrutiva exige sessão</td></tr>
+    </tbody>
+  </table>
+
+  <!-- checklist -->
+  <h3><span class="step-badge" style="background:#22c55e">✓</span> Checklist de segurança para o merchant</h3>
+  <table class="t">
+    <thead><tr><th>Item</th><th>Status esperado</th></tr></thead>
+    <tbody>
+      <tr><td>API Key armazenada em variável de ambiente (não no código)</td><td><span class="pill pill-green">obrigatório</span></td></tr>
+      <tr><td>callbackUrl usando HTTPS</td><td><span class="pill pill-green">obrigatório</span></td></tr>
+      <tr><td>Validar <code>X-DOM-Signature</code> no callback</td><td><span class="pill pill-green">obrigatório</span></td></tr>
+      <tr><td>Implementar idempotência (checar <code>paymentId</code> já processado)</td><td><span class="pill pill-amber">recomendado</span></td></tr>
+      <tr><td>Rotacionar API Key a cada 90 dias</td><td><span class="pill pill-amber">recomendado</span></td></tr>
+      <tr><td>Uma chave por ambiente (prod / staging / dev)</td><td><span class="pill pill-amber">recomendado</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    DOM Pagamentos · Guia de Onboarding v1.0.0 · Março 2026<br/>
+    Suporte: suporte@dompagamentos.com.br · Docs: docs.dompagamentos.com.br
+  </div>
+</div>
+
+<!-- ═══ PAGE 6 – RESUMO RÁPIDO ═══════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">06 · REFERÊNCIA RÁPIDA</div>
+  <h2>Resumo dos 4 Passos</h2>
+  <div class="section-divider"></div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot blue">1</div>
+      <div class="tl-title">Registrar o Merchant</div>
+      <div class="tl-desc">Endpoint público. Cria subconta Asaas automaticamente. Retorna o <code>merchantId</code>.</div>
+      <div class="tl-endpoint"><span class="pill pill-post">POST</span> /api/v1/merchants</div>
+      <table class="t" style="margin-top:8px">
+        <tbody>
+          <tr><td>Body obrigatório</td><td><code>name</code>, <code>document</code>, <code>email</code>, <code>phone</code></td></tr>
+          <tr><td>Body opcional</td><td><code>callbackUrl</code></td></tr>
+          <tr><td>Retorna</td><td><code>merchantId</code> (UUID) — guarde!</td></tr>
+          <tr><td>Resposta de sucesso</td><td>HTTP 201 Created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot green">2</div>
+      <div class="tl-title">Criar Conta de Acesso</div>
+      <div class="tl-desc">Endpoint público. Vincula e-mail + senha (BCrypt) ao merchant existente.</div>
+      <div class="tl-endpoint"><span class="pill pill-post">POST</span> /api/v1/auth/register</div>
+      <table class="t" style="margin-top:8px">
+        <tbody>
+          <tr><td>Body obrigatório</td><td><code>merchantId</code>, <code>email</code>, <code>password</code> (≥8 chars)</td></tr>
+          <tr><td>Retorna</td><td>Mensagem de confirmação</td></tr>
+          <tr><td>Resposta de sucesso</td><td>HTTP 201 Created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot amber">3</div>
+      <div class="tl-title">Fazer Login (obter JWT)</div>
+      <div class="tl-desc">Endpoint público. Valida credenciais e retorna token válido por 24 horas.</div>
+      <div class="tl-endpoint"><span class="pill pill-post">POST</span> /api/v1/auth/login</div>
+      <table class="t" style="margin-top:8px">
+        <tbody>
+          <tr><td>Body obrigatório</td><td><code>email</code>, <code>password</code></td></tr>
+          <tr><td>Retorna</td><td><code>token</code> (JWT), <code>merchantId</code>, <code>expiresAt</code></td></tr>
+          <tr><td>Resposta de sucesso</td><td>HTTP 200 OK</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot violet">4</div>
+      <div class="tl-title">Gerar API Key</div>
+      <div class="tl-desc">Requer JWT. Gera a chave <code>dpag_…</code> exibida apenas uma vez. Use-a no header <code>X-Api-Key</code>.</div>
+      <div class="tl-endpoint"><span class="pill pill-post">POST</span> /api/v1/api-keys</div>
+      <table class="t" style="margin-top:8px">
+        <tbody>
+          <tr><td>Header</td><td><code>Authorization: Bearer &lt;jwt&gt;</code></td></tr>
+          <tr><td>Body obrigatório</td><td><code>description</code> (rótulo da chave)</td></tr>
+          <tr><td>Retorna</td><td><code>key</code> (dpag_…) — salve agora!</td></tr>
+          <tr><td>Resposta de sucesso</td><td>HTTP 201 Created</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="ok-box">
+    <strong>Pronto para usar!</strong>
+    Com a <code>dpag_…</code> em mãos, inclua <code>X-Api-Key: dpag_…</code> em qualquer
+    requisição para criar links de pagamento, consultar status e receber notificações via webhook.
+  </div>
+
+  <div class="footer">
+    DOM Pagamentos · Guia de Onboarding v1.0.0 · Março 2026<br/>
+    Suporte: suporte@dompagamentos.com.br
+  </div>
+</div>
+
+</body>
+</html>
