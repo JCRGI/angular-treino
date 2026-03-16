@@ -98,6 +98,58 @@
             }
           </div>
 
+          <!-- ── TIPO DE OPERAÇÃO ──────────────────────────────────── -->
+          <div class="field">
+            <label class="label">Tipo de operação</label>
+            <div class="op-selector">
+
+              <button
+                type="button"
+                class="op-card"
+                [class.op-card--active]="operationType() === 'NACIONAL'"
+                (click)="selectOperationType('NACIONAL')"
+              >
+                <div class="op-card__icon op-card__icon--nacional">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+                </div>
+                <div class="op-card__body">
+                  <span class="op-card__title">Operações nacionais</span>
+                  <span class="op-card__desc">Receba em conta BR · Pix, Boleto, Cartão</span>
+                </div>
+                <div class="op-card__check">
+                  @if (operationType() === 'NACIONAL') {
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+                  }
+                </div>
+              </button>
+
+              <button
+                type="button"
+                class="op-card"
+                [class.op-card--active]="operationType() === 'OFFSHORE'"
+                (click)="selectOperationType('OFFSHORE')"
+              >
+                <div class="op-card__icon op-card__icon--offshore">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="op-card__body">
+                  <span class="op-card__title">
+                    Offshore
+                    <span class="op-card__badge">EBANX</span>
+                  </span>
+                  <span class="op-card__desc">Receba em conta exterior · FX + SWIFT (USD/EUR)</span>
+                </div>
+                <div class="op-card__check">
+                  @if (operationType() === 'OFFSHORE') {
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+                  }
+                </div>
+              </button>
+
+            </div>
+          </div>
+          <!-- /tipo de operação -->
+
           @if (errorMsg()) {
             <div class="alert alert--error">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -238,6 +290,16 @@
             <span class="merchant-id-label">Merchant ID</span>
             <span class="merchant-id-value">{{ merchantId() }}</span>
             <span class="merchant-id-hint">Guarde este ID — você precisará dele para suporte.</span>
+          </div>
+
+          <div class="op-result-tag" [class.op-result-tag--offshore]="operationType() === 'OFFSHORE'">
+            @if (operationType() === 'OFFSHORE') {
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Conta configurada para operações <strong>Offshore</strong> via EBANX
+            } @else {
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+              Conta configurada para <strong>Operações Nacionais</strong>
+            }
           </div>
 
           <div class="next-steps">

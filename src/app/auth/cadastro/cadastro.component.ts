@@ -9,7 +9,7 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
-import { MerchantService } from '../../services/merchant.service';
+import { MerchantService, OperationType } from '../../services/merchant.service';
 import { AuthService } from '../../services/auth.service';
 
 type Step = 'empresa' | 'acesso' | 'sucesso';
@@ -40,6 +40,7 @@ export class CadastroComponent {
   loading = signal(false);
   errorMsg = signal('');
   merchantId = signal('');
+  operationType = signal<OperationType>('NACIONAL');
 
   empresaForm: FormGroup = this.fb.group({
     name:     ['', [Validators.required, Validators.maxLength(200)]],
@@ -68,6 +69,10 @@ export class CadastroComponent {
       this.acessoForm.hasError('passwordMismatch') &&
       this.acessoForm.get('confirmPassword')?.touched
     );
+  }
+
+  selectOperationType(type: OperationType): void {
+    this.operationType.set(type);
   }
 
   formatDocument(event: Event): void {
@@ -117,7 +122,8 @@ export class CadastroComponent {
       document: document.replace(/\D/g, ''),
       email: email.trim().toLowerCase(),
       phone: phone.replace(/\D/g, ''),
-      ...(callbackUrl ? { callbackUrl: callbackUrl.trim() } : {})
+      ...(callbackUrl ? { callbackUrl: callbackUrl.trim() } : {}),
+      ...(this.operationType() === 'OFFSHORE' ? { preferredPsp: 'EBANX' } : {})
     }).subscribe({
       next: (merchant) => {
         this.merchantId.set(merchant.id);

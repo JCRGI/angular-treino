@@ -2,12 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export type OperationType = 'NACIONAL' | 'OFFSHORE';
+
 export interface CreateMerchantRequest {
   name: string;
   document: string;
   email: string;
   phone: string;
   callbackUrl?: string;
+  preferredPsp?: string;
 }
 
 export interface CreateMerchantResponse {
@@ -18,6 +21,7 @@ export interface CreateMerchantResponse {
   preferredPsp: string;
   callbackUrl?: string;
   createdAt: string;
+  operationType?: OperationType;
 }
 
 export interface RegisterUserRequest {
