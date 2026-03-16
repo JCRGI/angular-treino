@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Session {
   token: string;
@@ -31,7 +32,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>('/api/v1/auth/login', { email, password })
+      .post<LoginResponse>(`${environment.apiUrl}/api/v1/auth/login`, { email, password })
       .pipe(tap(res => {
         const session: Session = {
           token: res.token,

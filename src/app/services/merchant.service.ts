@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export type OperationType = 'NACIONAL' | 'OFFSHORE';
 
@@ -39,7 +40,7 @@ export interface ApiKeyResponse {
 @Injectable({ providedIn: 'root' })
 export class MerchantService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/v1';
+  private readonly baseUrl = `${environment.apiUrl}/api/v1`;
 
   createMerchant(data: CreateMerchantRequest): Observable<CreateMerchantResponse> {
     return this.http.post<CreateMerchantResponse>(`${this.baseUrl}/merchants`, data);
