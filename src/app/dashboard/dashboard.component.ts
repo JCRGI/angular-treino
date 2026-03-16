@@ -123,6 +123,10 @@ export class DashboardComponent implements OnInit {
     this.settingsSaved.set(false);
   }
 
+  toggleSidebar(): void {
+    this.sidebarOpen.update(open => !open);
+  }
+
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/']);

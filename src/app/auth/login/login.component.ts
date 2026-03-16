@@ -30,6 +30,10 @@ export class LoginComponent {
     return !!(c && c.invalid && (c.dirty || c.touched));
   }
 
+  togglePasswordVisibility(): void {
+    this.showPassword.update(show => !show);
+  }
+
   submit(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
 
