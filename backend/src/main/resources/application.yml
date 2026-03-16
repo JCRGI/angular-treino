@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: dom-pagamentos-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:dompag;DB_CLOSE_DELAY=-1;MODE=PostgreSQL}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: ${SERVER_PORT:8080}
+  compression:
+    enabled: true
+  error:
+    include-message: on_param
+
+# ===== Camel =====
+camel:
+  springboot:
+    main-run-controller: true
+  component:
+    http:
+      connection-timeout: 10000
+      response-timeout: 30000
+
+# ===== Security =====
+security:
+  jwt:
+    secret: ${JWT_SECRET:dom-pagamentos-secret-key-change-in-production-min-256-bits}
+    expiration-ms: ${JWT_EXPIRATION:86400000}  # 24h
+
+# ===== PSP Configuration =====
+psp:
+  asaas:
+    base-url: ${ASAAS_BASE_URL:https://sandbox.asaas.com/api/v3}
+    api-key: ${ASAAS_API_KEY:}
+    webhook-token: ${ASAAS_WEBHOOK_TOKEN:}
+    timeout-ms: 30000
+  iugu:
+    base-url: ${IUGU_BASE_URL:https://api.iugu.com/v1}
+    api-key: ${IUGU_API_KEY:}
+    account-id: ${IUGU_ACCOUNT_ID:}
+    timeout-ms: 30000
+  ebanx:
+    # Sandbox: https://sandbox.ebanx.com  |  Produção: https://api.ebanx.com
+    base-url: ${EBANX_BASE_URL:https://sandbox.ebanx.com}
+    integration-key: ${EBANX_INTEGRATION_KEY:}
+    webhook-secret: ${EBANX_WEBHOOK_SECRET:}
+    timeout-ms: 30000
+
+  routing:
+    # Merchants above this monthly volume (in cents) are routed to iugu
+    iugu-threshold-cents: 50000000  # R$ 500.000
+
+# ===== Actuator =====
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,camelroutes
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# ===== Logging =====
+logging:
+  level:
+    br.com.dompagamentos: DEBUG
+    org.apache.camel: INFO
+    org.springframework.security: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
